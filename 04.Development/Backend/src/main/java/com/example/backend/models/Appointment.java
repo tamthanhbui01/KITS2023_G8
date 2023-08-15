@@ -31,8 +31,25 @@ public class Appointment {
     private String appSpecialization;
     @Column(name = "app_doctorname")
     private String appDoctorName;
+    @Column(name = "app_status")
+    private String appStatus;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "up_id", referencedColumnName = "up_id")
     private UserProfile userProfile;
+
+    public Appointment(String appAddress, Date appDate, String appTime,
+                       String appInstitute, String appDescription, String appSpecialization,
+                       String appDoctorName, String appStatus, UserProfile userProfile) {
+        this.appAddress = appAddress;
+        this.appDate = appDate;
+        this.appTime = appTime;
+        this.appInstitute = appInstitute;
+        this.appDescription = appDescription;
+        this.appSpecialization = appSpecialization;
+        this.appDoctorName = appDoctorName;
+        this.appStatus = appStatus;
+        this.userProfile = userProfile;
+    }
+
     // address, date, time, institute, description, specialization, doctor name
 }

@@ -33,7 +33,8 @@ public class AuthenticationService {
                 .userEmail(registerRequest.getUserEmail())
                 .userPassword(passwordEncoder.encode(registerRequest.getUserPassword()))
                 .userCreatedAt(LocalDateTime.now())
-                .userUpdateAt(LocalDateTime.now())
+                .userUpdatedAt(LocalDateTime.now())
+                .userStatus("active")
                 .role(roleRepository.findByRoleName("ROLE_USER"))
                 .build();
 
@@ -47,6 +48,9 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUserEmail(), authenticationRequest.getUserPassword()));
         User user = repository.findByUserEmail(authenticationRequest.getUserEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        // Chặn bỏ sự hoạt động của các tài khoản unactive
+        if(user.getUserStatus() == "unactive") return null;
+
         UserDetails userDetails = new UserDetailsImpl(user);
         var jwtToken = jwtService.generateToken(userDetails);
         revokeAllUserTokens(user);

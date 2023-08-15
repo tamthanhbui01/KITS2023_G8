@@ -31,17 +31,20 @@ public class User {
     @Column(name = "user_created_at", unique = true)
     private LocalDateTime userCreatedAt;
     @Column(name = "user_update_at")
-    private LocalDateTime userUpdateAt;
+    private LocalDateTime userUpdatedAt;
+    @Column(name = "user_status")
+    private String userStatus;
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-    public User(String userAccount, String userPassword, String userEmail, LocalDateTime userCreatedAt, LocalDateTime userUpdateAt, Role role) {
+    public User(String userAccount, String userPassword, String userEmail, LocalDateTime userCreatedAt, LocalDateTime userUpdatedAt, Role role) {
         this.userAccount = userAccount;
         this.userPassword = userPassword;
         this.userEmail = userEmail;
         this.userCreatedAt = userCreatedAt;
-        this.userUpdateAt = userUpdateAt;
+        this.userUpdatedAt = userUpdatedAt;
+        this.userStatus = "active";
         this.role = role;
     }
 
