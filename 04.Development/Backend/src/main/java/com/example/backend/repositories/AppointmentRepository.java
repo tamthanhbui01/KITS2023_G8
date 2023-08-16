@@ -1,5 +1,6 @@
 package com.example.backend.repositories;
 
+import com.example.backend.enums.AppointmentStatusEnum;
 import com.example.backend.models.Appointment;
 import com.example.backend.models.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,13 +13,12 @@ import java.util.Optional;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     @Query("""
-        select a from Appointment a 
+        select a.appAddress, a.appInstitute, a.appSpecialization from Appointment a 
         inner join UserProfile up on a.userProfile.upID = up.upID
         where up.user.userID = :userID
-            and a.appStatus like :appointmentStatus 
-        order by a.appDatetime desc 
+        order by a.appDatetime desc
     """)
-    List<Appointment> findAllAppointmentOfThis(Long userID, String appointmentStatus);
+    List<Appointment> findAllAppointmentOfThis(Long userID, AppointmentStatusEnum appointmentStatus);
 
     @Query("""
         select up from UserProfile up where up.user.userID = :userID

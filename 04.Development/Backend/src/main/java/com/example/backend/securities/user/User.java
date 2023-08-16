@@ -1,5 +1,6 @@
 package com.example.backend.securities.user;
 
+import com.example.backend.enums.UserStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +34,8 @@ public class User {
     @Column(name = "user_updated_at")
     private LocalDateTime userUpdatedAt;
     @Column(name = "user_status")
-    private String userStatus;
+    @Enumerated(EnumType.STRING)
+    private UserStatusEnum userStatus;
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
@@ -44,7 +46,7 @@ public class User {
         this.userEmail = userEmail;
         this.userCreatedAt = userCreatedAt;
         this.userUpdatedAt = userUpdatedAt;
-        this.userStatus = "ACTIVE";
+        this.userStatus = UserStatusEnum.ACTIVE;
         this.role = role;
     }
 

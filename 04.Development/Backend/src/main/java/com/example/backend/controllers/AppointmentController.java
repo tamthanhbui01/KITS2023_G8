@@ -1,10 +1,10 @@
 package com.example.backend.controllers;
 
 import com.example.backend.controllers.controller_requests.CreateAppointmentRequest;
+import com.example.backend.enums.AppointmentStatusEnum;
 import com.example.backend.models.Appointment;
 import com.example.backend.services.interfaces.AppointmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class AppointmentController {
     public List<Appointment> getAllAppointments(@PathVariable Long userID,
                                                 @RequestParam int pageNo,
                                                 @RequestParam int pageSize,
-                                                @RequestParam String appointmentStatus) {
+                                                @RequestParam(required = false) AppointmentStatusEnum appointmentStatus) {
         return appointmentService.getAllAppointments(userID, pageNo, pageSize, appointmentStatus);
     }
     @PostMapping("create-appointment")

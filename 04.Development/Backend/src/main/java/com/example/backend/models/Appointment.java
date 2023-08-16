@@ -1,12 +1,12 @@
 package com.example.backend.models;
 
+import com.example.backend.enums.AppointmentStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @Entity
@@ -31,21 +31,22 @@ public class Appointment {
     @Column(name = "app_doctorname")
     private String appDoctorName;
     @Column(name = "app_status")
-    private String appStatus;
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatusEnum appStatus;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "up_id", referencedColumnName = "up_id")
     private UserProfile userProfile;
 
     public Appointment(String appAddress, LocalDateTime appDatetime,
                        String appInstitute, String appDescription, String appSpecialization,
-                       String appDoctorName, String appStatus, UserProfile userProfile) {
+                       String appDoctorName, UserProfile userProfile) {
         this.appAddress = appAddress;
         this.appDatetime = appDatetime;
         this.appInstitute = appInstitute;
         this.appDescription = appDescription;
         this.appSpecialization = appSpecialization;
         this.appDoctorName = appDoctorName;
-        this.appStatus = appStatus;
+        this.appStatus = AppointmentStatusEnum.ONGOING;
         this.userProfile = userProfile;
     }
 

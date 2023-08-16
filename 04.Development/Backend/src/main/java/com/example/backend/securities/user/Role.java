@@ -1,5 +1,6 @@
 package com.example.backend.securities.user;
 
+import com.example.backend.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +19,10 @@ public class Role {
     @Column(name = "role_id")
     private Long roleID;
     @Column(name = "role_name")
-    private String roleName;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum roleName;
 
-    public Role(String roleName) {
+    public Role(RoleEnum roleName) {
         this.roleName = roleName;
     }
 }

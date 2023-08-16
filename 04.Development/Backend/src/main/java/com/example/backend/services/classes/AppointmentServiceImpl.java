@@ -3,6 +3,7 @@ package com.example.backend.services.classes;
 import com.example.backend.controllers.controller_requests.CreateAppointmentRequest;
 import com.example.backend.generics.Pagination;
 import com.example.backend.models.Appointment;
+import com.example.backend.enums.AppointmentStatusEnum;
 import com.example.backend.models.UserProfile;
 import com.example.backend.repositories.AppointmentRepository;
 import com.example.backend.services.interfaces.AppointmentService;
@@ -18,8 +19,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
     @Override
-    public List<Appointment> getAllAppointments(Long userID, int pageNo, int pageSize, String appointmentStatus) {
-        appointmentStatus = "%" + appointmentStatus;
+    public List<Appointment> getAllAppointments(Long userID, int pageNo, int pageSize, AppointmentStatusEnum appointmentStatus) {
         List<Appointment> allAppointments = appointmentRepository.findAllAppointmentOfThis(userID, appointmentStatus);
 
         //Phan trang cho danh sach appointments
@@ -59,7 +59,6 @@ public class AppointmentServiceImpl implements AppointmentService {
                     createAppointmentRequest.getAppDescription(),
                     createAppointmentRequest.getAppSpecialization(),
                     createAppointmentRequest.getAppDoctorName(),
-                    "ONGOING",
                     userProfile);
             appointmentRepository.save(appointment);
             return "Create an appointment successfully!";
@@ -86,7 +85,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public String cancelAppointment(Long appointmentID) {
         Appointment appointment = appointmentRepository.findById(appointmentID).orElseThrow();
-        appointment.setAppStatus("CANCELED");
+        appointment.setAppStatus(AppointmentStatusEnum.CANCELED);
         appointmentRepository.save(appointment);
         return "Canceled an appointment successfully!";
     }

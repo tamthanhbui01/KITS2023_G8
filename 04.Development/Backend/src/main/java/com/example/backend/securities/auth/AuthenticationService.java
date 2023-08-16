@@ -1,5 +1,7 @@
 package com.example.backend.securities.auth;
 
+import com.example.backend.enums.RoleEnum;
+import com.example.backend.enums.UserStatusEnum;
 import com.example.backend.securities.user.User;
 import com.example.backend.securities.user.RoleRepository;
 import com.example.backend.securities.user.UserRepository;
@@ -34,8 +36,8 @@ public class AuthenticationService {
                 .userPassword(passwordEncoder.encode(registerRequest.getUserPassword()))
                 .userCreatedAt(LocalDateTime.now())
                 .userUpdatedAt(LocalDateTime.now())
-                .userStatus("active")
-                .role(roleRepository.findByRoleName("ROLE_USER"))
+                .userStatus(UserStatusEnum.ACTIVE)
+                .role(roleRepository.findByRoleName(RoleEnum.ROLE_USER))
                 .build();
 
         repository.save(user);
@@ -49,7 +51,7 @@ public class AuthenticationService {
         User user = repository.findByUserEmail(authenticationRequest.getUserEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         // Chặn bỏ sự hoạt động của các tài khoản unactive
-        if(user.getUserStatus().equals("unactive")) return null;
+        if(user.getUserStatus().equals(UserStatusEnum.UNACTIVE)) return null;
 
         UserDetails userDetails = new UserDetailsImpl(user);
         var jwtToken = jwtService.generateToken(userDetails);

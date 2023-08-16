@@ -1,5 +1,6 @@
 package com.example.backend;
 
+import com.example.backend.enums.RoleEnum;
 import com.example.backend.securities.user.Role;
 import com.example.backend.securities.user.RoleRepository;
 import com.example.backend.securities.user.User;
@@ -26,9 +27,9 @@ public class BackendApplication {
 		List<User> users = userRepository.findAll();
 		if(!users.isEmpty()) return (String[] args) -> {};
 		return (String[] args) -> {
-			Role roleAdmin = new Role("ROLE_ADMIN");
+			Role roleAdmin = new Role(RoleEnum.ROLE_ADMIN);
 			roleRepository.save(roleAdmin);
-			Role roleUser = new Role("ROLE_USER");
+			Role roleUser = new Role(RoleEnum.ROLE_USER);
 			roleRepository.save(roleUser);
 
 			User admin = new User("admin",
