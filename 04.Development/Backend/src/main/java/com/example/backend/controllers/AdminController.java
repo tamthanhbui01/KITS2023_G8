@@ -1,5 +1,6 @@
 package com.example.backend.controllers;
 
+import com.example.backend.controllers.controller_responses.AdminFindUsersResponse;
 import com.example.backend.securities.user.User;
 import com.example.backend.securities.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,9 @@ public class AdminController {
     @Autowired
     private UserService userService;
     @GetMapping("find-users-by")
-    public List<User> getAllUsers(@RequestParam String partUserAccount, @RequestParam String partUserEmail, @RequestParam int pageNo, @RequestParam int pageSize){
+    public AdminFindUsersResponse getAllUsers(@RequestParam String partUserAccount, @RequestParam String partUserEmail, @RequestParam int pageNo, @RequestParam int pageSize){
         return userService.getAllUsers(partUserAccount, partUserEmail, pageNo, pageSize);
+
     }
     @PutMapping("change-password/{userID}")
     public String changePassword(@PathVariable Long userID, @RequestParam String newUserPassword){
@@ -22,6 +24,6 @@ public class AdminController {
     }
     @PutMapping("activate-account/{userID}")
     public String activateAccount(@PathVariable Long userID){
-        return userService.activateAccount(userID);
+        return  userService.activateAccount(userID);
     }
 }

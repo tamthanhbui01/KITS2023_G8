@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,10 +20,8 @@ public class Appointment {
     private Long appID;
     @Column(name = "app_address")
     private String appAddress;
-    @Column(name = "app_date")
-    private Date appDate;
-    @Column(name = "app_time")
-    private String appTime;
+    @Column(name = "app_datetime")
+    private LocalDateTime appDatetime;
     @Column(name = "app_institute")
     private String appInstitute;
     @Column(name = "app_description")
@@ -37,12 +36,11 @@ public class Appointment {
     @JoinColumn(name = "up_id", referencedColumnName = "up_id")
     private UserProfile userProfile;
 
-    public Appointment(String appAddress, Date appDate, String appTime,
+    public Appointment(String appAddress, LocalDateTime appDatetime,
                        String appInstitute, String appDescription, String appSpecialization,
                        String appDoctorName, String appStatus, UserProfile userProfile) {
         this.appAddress = appAddress;
-        this.appDate = appDate;
-        this.appTime = appTime;
+        this.appDatetime = appDatetime;
         this.appInstitute = appInstitute;
         this.appDescription = appDescription;
         this.appSpecialization = appSpecialization;

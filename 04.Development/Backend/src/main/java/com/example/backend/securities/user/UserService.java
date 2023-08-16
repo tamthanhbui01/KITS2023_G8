@@ -1,6 +1,8 @@
 package com.example.backend.securities.user;
 
 import com.example.backend.controllers.controller_requests.ChangePasswordRequest;
+import com.example.backend.controllers.controller_responses.AdminFindUsersResponse;
+import com.example.backend.generics.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,21 +19,18 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<User> getAllUsers(String partUserAccount,String partUserEmail, int pageNo, int pageSize) {
+    public AdminFindUsersResponse getAllUsers(String partUserAccount, String partUserEmail, int pageNo, int pageSize) {
         partUserAccount = "%" + partUserAccount + "%";
         partUserEmail = "%" + partUserEmail + "%";
         List<User> allUsers = userRepository.findUsersByPartUserAccountAndPartUserEmail(partUserAccount, partUserEmail);
-        int totalPage = Math.floorDiv(allUsers.size(), pageSize) + 1 ;
-        if(pageNo > totalPage) return null;
+        int totalPages = Math.floorDiv(allUsers.size(), pageSize) + 1 ;
         //Phân trang từ phần tử startElement đến endElement
-        int startElement = (pageNo - 1)*pageSize;
-        int endElement = pageNo * pageSize;
-        List<User> users = new ArrayList<>();
-        for(int i = startElement; i < endElement; i++){
-            User user = allUsers.get(i);
-            users.add(user);
-        }
-        return users;
+        Pagination<User> pagination = new Pagination<User>();
+        List<User> users = pagination.pagination(allUsers, pageNo, pageSize);
+
+        //
+        AdminFindUsersResponse adminFindUsersResponse = new AdminFindUsersResponse(users, pageNo, pageSize, totalPages, allUsers.size());
+        return adminFindUsersResponse;
     }
 
     public String changePassword(Long userID, ChangePasswordRequest changePasswordRequest) {

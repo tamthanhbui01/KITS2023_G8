@@ -30,7 +30,7 @@ public class User {
     private String userEmail;
     @Column(name = "user_created_at", unique = true)
     private LocalDateTime userCreatedAt;
-    @Column(name = "user_update_at")
+    @Column(name = "user_updated_at")
     private LocalDateTime userUpdatedAt;
     @Column(name = "user_status")
     private String userStatus;

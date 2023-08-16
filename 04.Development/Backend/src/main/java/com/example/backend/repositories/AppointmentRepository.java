@@ -16,7 +16,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
         inner join UserProfile up on a.userProfile.upID = up.upID
         where up.user.userID = :userID
             and a.appStatus like :appointmentStatus 
-        order by a.appDate, a.appTime desc 
+        order by a.appDatetime desc 
     """)
     List<Appointment> findAllAppointmentOfThis(Long userID, String appointmentStatus);
 

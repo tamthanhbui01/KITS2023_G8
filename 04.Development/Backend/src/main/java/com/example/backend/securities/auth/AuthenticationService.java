@@ -27,7 +27,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
 
-    public AuthenticationResponse register(RegisterRequest registerRequest){
+    public String register(RegisterRequest registerRequest){
         var user = User.builder()
                 .userAccount(registerRequest.getUserAccount())
                 .userEmail(registerRequest.getUserEmail())
@@ -40,7 +40,7 @@ public class AuthenticationService {
 
         repository.save(user);
 
-        return AuthenticationResponse.builder().build();
+        return "Register successfully!";
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
@@ -49,14 +49,14 @@ public class AuthenticationService {
         User user = repository.findByUserEmail(authenticationRequest.getUserEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         // Chặn bỏ sự hoạt động của các tài khoản unactive
-        if(user.getUserStatus() == "unactive") return null;
+        if(user.getUserStatus().equals("unactive")) return null;
 
         UserDetails userDetails = new UserDetailsImpl(user);
         var jwtToken = jwtService.generateToken(userDetails);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
-                .name(user.getUserAccount())
+                .userAccount(user.getUserAccount())
                 .token(jwtToken)
                 .build();
     }
