@@ -44,9 +44,10 @@ public class User {
         this.userEmail = userEmail;
         this.userCreatedAt = userCreatedAt;
         this.userUpdatedAt = userUpdatedAt;
-        this.userStatus = "active";
+        this.userStatus = "ACTIVE";
         this.role = role;
     }
+
 
     // account, password, email, createdAt, updatedAt, role_id
 }

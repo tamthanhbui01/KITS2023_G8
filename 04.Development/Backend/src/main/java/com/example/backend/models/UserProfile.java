@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 @Data
 @Entity
 @Table(name = "user_profiles")
@@ -21,7 +20,7 @@ public class UserProfile {
     @Column(nullable = false, name = "up_name")
     private String upName;
     @Column(name = "up_dob") // Date of Birth
-    private Date upDoB;
+    private LocalDate upDoB;
     @Column(name = "up_phone")
     private String upPhone;
     @Column(name = "up_gender")
@@ -29,7 +28,7 @@ public class UserProfile {
     @Column(name = "up_idcode")
     private String upIDCode;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", unique = true)
     private User user;
     @OneToOne(mappedBy = "userProfile")
     private MedicalRecord medicalRecord;

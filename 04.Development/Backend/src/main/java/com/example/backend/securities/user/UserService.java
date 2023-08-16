@@ -78,7 +78,7 @@ public class UserService {
         try {
             User user = userRepository.findByUserID(userID).orElseThrow();
             if (user.getRole().getRoleID() == 1) return "Can not delete admin account!";
-            user.setUserStatus("unactive");
+            user.setUserStatus("UNACTIVE");
             userRepository.save(user);
             return "Delete successfully!";
         }catch (NoSuchElementException e){
@@ -89,8 +89,8 @@ public class UserService {
     public String activateAccount(Long userID) {
         try{
             User user = userRepository.findByUserID(userID).orElseThrow();
-            if(user.getUserStatus().equals("active")) return "User already be active!";
-            user.setUserStatus("active");
+            if(user.getUserStatus().equals("ACTIVE")) return "User already be active!";
+            user.setUserStatus("ACTIVE");
             user.setUserUpdatedAt(LocalDateTime.now());
             userRepository.save(user);
             return "activated successfully!";

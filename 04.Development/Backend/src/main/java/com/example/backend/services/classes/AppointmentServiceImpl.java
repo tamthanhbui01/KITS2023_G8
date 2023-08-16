@@ -59,7 +59,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                     createAppointmentRequest.getAppDescription(),
                     createAppointmentRequest.getAppSpecialization(),
                     createAppointmentRequest.getAppDoctorName(),
-                    "undue",
+                    "ONGOING",
                     userProfile);
             appointmentRepository.save(appointment);
             return "Create an appointment successfully!";
@@ -86,7 +86,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public String cancelAppointment(Long appointmentID) {
         Appointment appointment = appointmentRepository.findById(appointmentID).orElseThrow();
-        appointment.setAppStatus("canceled");
+        appointment.setAppStatus("CANCELED");
         appointmentRepository.save(appointment);
         return "Canceled an appointment successfully!";
     }

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,10 +21,8 @@ public class Reminder {
     private Long remID;
     @Column(name = "rem_type")
     private String remType;
-    @Column(name = "rem_date")
-    private Date remDate;
-    @Column(name = "rem_time")
-    private String remTime;
+    @Column(name = "rem_datetime")
+    private LocalDateTime remDatetime;
     @Column(name = "rem_message")
     private String remMessage;
     @ManyToOne

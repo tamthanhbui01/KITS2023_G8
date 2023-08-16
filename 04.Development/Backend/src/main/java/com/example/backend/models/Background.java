@@ -33,6 +33,7 @@ public class Background {
     public static class BackgroundId implements Serializable {
 
         private Long medID;
+        @Column(name = "bg_date")
         private LocalDate bgDate;
     }
 }
