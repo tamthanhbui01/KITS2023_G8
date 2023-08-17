@@ -1,29 +1,48 @@
 import "./Dashboard.css";
-import { Col, Row } from "antd";
-const style = {
-  background: "#0092ff",
-  padding: "8px 0",
-};
+import { Col, Row, Card } from "antd";
 function Dashboard() {
+
   return (
     <>
-    <Row gutter={[16,24]}>
-    <Col className="gutter-row" span={6}>
-            <div style={style}>col-6</div>
-            <div style={style}>col-6</div>
+      
+      {window.screen.width<568? <div>hi</div>:"" }
+      <Row>
+        <Col
+          style={{ background: "blue", padding: 8 }}
+          xs={24}
+          sm={24}
+          md={12}
+          lg={12}
+          xl={6}
+          xxl={6}
+        >
+          <Card>6</Card>
         </Col>
-        <Col className="gutter-row" span={6}>
-            <div style={style}>col-6</div>
-            <div style={style}>col-6</div>
-        </Col>
-        
+        <Col
+          style={{ background: "red", padding: 8 }}
+          xs={24}
+          sm={24}
+          md={12}
+          lg={12}
+          xl={6}
+          xxl={6}
 
-        <Col className="gutter-row" span={12}>
-            <div style={style}>col-12</div>
-
+        >
+          <Card>6</Card>
         </Col>
-        
-    </Row>
+        <Col
+          style={{ background: "green", padding: 8 }}
+          xs={24}
+          sm={24}
+          md={24}
+          lg={24}
+          xl={12}
+          xxl={12}
+
+        >
+          <Card>12</Card>
+        </Col>
+      </Row>
     </>
   );
 }

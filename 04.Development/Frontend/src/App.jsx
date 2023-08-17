@@ -1,8 +1,8 @@
 const { Sider, Header, Footer, Content } = Layout;
 const { Text } = Typography;
-import Users from "./Users/Users"
-import Dashboard from "./Dashboard/Dashboard"
-import Appointments from "./Appointments/Appointments"
+import Users from "./Users/Users";
+import Dashboard from "./Dashboard/Dashboard";
+import Appointments from "./Appointments/Appointments";
 import {
   Layout,
   Menu,
@@ -14,7 +14,6 @@ import {
   FloatButton,
   Avatar,
   Badge,
-  
 } from "antd";
 const { Search } = Input;
 import "./App.css";
@@ -37,7 +36,7 @@ function App() {
     <Layout style={{ minHeight: "100vh" }}>
       <FloatButton.Group shape="circle">
         <FloatButton
-          style={{backgroudColor:"#005298"}}
+          style={{ backgroudColor: "#005298" }}
           tooltip={<div>Customize</div>}
           onClick={() => setOpen(!open)}
           icon={<GiMagicBroom />}
@@ -54,12 +53,14 @@ function App() {
         open={open}
         onClose={() => setOpen(!open)}
         title="Customization"
-      >
-      </Drawer>
+      ></Drawer>
       <Sider
         style={{ backgroundColor: "#005298" }}
         width={240}
         collapsed={collapsed}
+        breakpoint="lg"
+        onBreakpoint={(broken) => handleCollapsed(broken)}
+        onCollapse={(collapsed) => handleCollapsed(collapsed)}
       >
         <div className="logo-wrap" style={{ height: 64 }}>
           <GiHealthCapsule fontSize={32} />
@@ -114,11 +115,11 @@ function App() {
       </Sider>
 
       <Layout>
-        <Header style={{ background: "white"}}>
+        <Header style={{ background: "white" }}>
           <div
             style={{
               display: "flex",
-              maxHeight:64,
+              maxHeight: 64,
               alignItems: "center",
             }}
           >
@@ -133,7 +134,7 @@ function App() {
               <Search
                 placeholder="Search"
                 size="large"
-                style={{ width: 360 }}
+                style={{ width: "10rem" }}
               />
             </div>
 
@@ -168,22 +169,21 @@ function App() {
               ]}
             ></Menu>
             <Space direction="horizontal">
-            <Badge count={10} overflowCount={9}>
-              <Avatar style={{backgroundColor:"#005298"}} icon={<IoNotificationsSharp />} />
-            </Badge>
-            
+              <Badge count={10} overflowCount={9}>
+                <Avatar
+                  style={{ backgroundColor: "#005298" }}
+                  icon={<IoNotificationsSharp />}
+                />
+              </Badge>
             </Space>
-           
-
           </div>
         </Header>
-        <Content style={{height:3000}}>
+        <Content style={{ height: 3000 }}>
           <Routes>
-            <Route path="/" element={<Dashboard/>}></Route>
-            <Route path="/users" element={<Users/>}></Route>
-            <Route path="/appointments" element={<Appointments/>}></Route>
+            <Route path="/" element={<Dashboard />}></Route>
+            <Route path="/users" element={<Users />}></Route>
+            <Route path="/appointments" element={<Appointments />}></Route>
           </Routes>
-
         </Content>
         <Footer style={{ backgroundColor: "" }}>
           <div>2023@ G8</div>
