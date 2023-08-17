@@ -1,12 +1,9 @@
 package com.example.backend.controllers;
 
 import com.example.backend.controllers.controller_responses.AdminFindUsersResponse;
-import com.example.backend.securities.user.User;
 import com.example.backend.securities.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1.0/admin")

@@ -1,6 +1,7 @@
 package com.example.backend.models;
 
 import com.example.backend.enums.AppointmentStatusEnum;
+import com.example.backend.securities.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,12 +35,12 @@ public class Appointment {
     @Enumerated(EnumType.STRING)
     private AppointmentStatusEnum appStatus;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "up_id", referencedColumnName = "up_id")
-    private UserProfile userProfile;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 
     public Appointment(String appAddress, LocalDateTime appDatetime,
                        String appInstitute, String appDescription, String appSpecialization,
-                       String appDoctorName, UserProfile userProfile) {
+                       String appDoctorName, User user) {
         this.appAddress = appAddress;
         this.appDatetime = appDatetime;
         this.appInstitute = appInstitute;
@@ -47,8 +48,9 @@ public class Appointment {
         this.appSpecialization = appSpecialization;
         this.appDoctorName = appDoctorName;
         this.appStatus = AppointmentStatusEnum.ONGOING;
-        this.userProfile = userProfile;
+        this.user = user;
     }
 
     // address, date, time, institute, description, specialization, doctor name
+
 }

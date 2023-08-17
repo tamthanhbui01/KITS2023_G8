@@ -17,7 +17,7 @@ public class MedicalRecord {
     private Long medID;
     @Column(name = "med_history", nullable = false)
     private String medHistory;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "up_id", referencedColumnName = "up_id")
     private UserProfile userProfile;
 }
