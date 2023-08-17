@@ -14,7 +14,7 @@ import {
   FloatButton,
   Avatar,
   Badge,
-  BackTop,
+  
 } from "antd";
 const { Search } = Input;
 import "./App.css";
@@ -44,7 +44,6 @@ function App() {
         />
 
         <FloatButton.BackTop
-          onClick={()=>{back}}
           tooltip={<div>BackTop</div>}
           visibilityHeight={0}
         />
@@ -169,7 +168,7 @@ function App() {
               ]}
             ></Menu>
             <Space direction="horizontal">
-            <Badge count={5} overflowCount={6}>
+            <Badge count={10} overflowCount={9}>
               <Avatar style={{backgroundColor:"#005298"}} icon={<IoNotificationsSharp />} />
             </Badge>
             
