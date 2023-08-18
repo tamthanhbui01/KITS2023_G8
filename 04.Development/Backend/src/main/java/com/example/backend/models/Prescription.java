@@ -1,5 +1,6 @@
 package com.example.backend.models;
 
+import com.example.backend.securities.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +26,8 @@ public class Prescription {
     private String preNotes;
     @Column(name = "pre_doctor")
     private String preDoctor;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
     // medicine, dosage, duration, notes, doctor
 }

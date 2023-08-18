@@ -1,7 +1,7 @@
 package com.example.backend.services.classes;
 
 import com.example.backend.controllers.controller_requests.CreateAppointmentRequest;
-import com.example.backend.controllers.controller_responses.AppointmentFindFromUserResponse;
+import com.example.backend.controllers.controller_responses.FindFromUserResponse;
 import com.example.backend.generics.Pagination;
 import com.example.backend.models.Appointment;
 import com.example.backend.enums.AppointmentStatusEnum;
@@ -23,7 +23,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private UserRepository userRepository;
     @Override
-    public AppointmentFindFromUserResponse getAllAppointments(Long userID, int pageNo, int pageSize, AppointmentStatusEnum appointmentStatus) {
+    public FindFromUserResponse<Appointment> getAllAppointments(Long userID, int pageNo, int pageSize, AppointmentStatusEnum appointmentStatus) {
         List<Appointment> allAppointments;
         if(appointmentStatus == null) allAppointments = appointmentRepository.findAllAppointmentOfThis(userID);
         else allAppointments = appointmentRepository.findAllAppointmentOfThis(userID, appointmentStatus);
@@ -33,7 +33,12 @@ public class AppointmentServiceImpl implements AppointmentService {
         //Phan trang cho danh sach appointments
         Pagination<Appointment> pagination = new Pagination<Appointment>();
         List<Appointment> appointments = pagination.pagination(allAppointments, pageNo, pageSize);
-        return new AppointmentFindFromUserResponse(appointments, pageNo, pageSize, totalPages, allAppointments.size());
+        return new FindFromUserResponse<Appointment>(appointments, pageNo, pageSize, totalPages, allAppointments.size());
+    }
+
+    @Override
+    public Appointment getSingleAppointment(Long appointmentID) {
+        return appointmentRepository.findById(appointmentID).orElseThrow();
     }
     // hàm xử lý chuỗi string thời gian sang LocalDatetime
     public LocalDateTime handleDatetime(String datetime) {

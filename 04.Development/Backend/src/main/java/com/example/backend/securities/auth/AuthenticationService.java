@@ -9,6 +9,7 @@ import com.example.backend.securities.config.JwtService;
 import com.example.backend.securities.token.Token;
 import com.example.backend.securities.token.TokenRepository;
 import com.example.backend.securities.token.TokenType;
+import com.example.backend.services.interfaces.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
