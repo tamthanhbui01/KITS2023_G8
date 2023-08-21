@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1.0/prescription/{userID}")
+@RequestMapping("api/v1.0/user/prescription/{userID}")
 public class PrescriptionController {
     @Autowired
     private PrescriptionService prescriptionService;

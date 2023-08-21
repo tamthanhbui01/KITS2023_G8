@@ -25,7 +25,7 @@ public class Reminder {
     private Long remID;
     @Column(name = "rem_datetime")
     private LocalDateTime remDatetime;
-    @Column(name = "rem_message")
+    @Column(name = "rem_message", length = 500)
     private String remMessage;
     @Column(name = "rem_type", insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)

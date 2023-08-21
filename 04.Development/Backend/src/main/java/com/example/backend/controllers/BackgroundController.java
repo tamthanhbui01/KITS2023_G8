@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("api/v1.0/background/{userID}")
+@RequestMapping("api/v1.0/user/background/{userID}")
 public class BackgroundController {
     @Autowired
     private BackgroundService backgroundService;

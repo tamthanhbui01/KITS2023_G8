@@ -8,7 +8,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1.0/medical-record/{userID}")
+@RequestMapping("api/v1.0/user/medical-record/{userID}")
 public class MedicalRecordController {
     @Autowired
     private MedicalRecordService medicalRecordService;

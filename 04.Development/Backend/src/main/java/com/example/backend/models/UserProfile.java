@@ -25,7 +25,7 @@ public class UserProfile {
     private String upPhone;
     @Column(name = "up_gender")
     private String upGender;
-    @Column(name = "up_idcode")
+    @Column(name = "up_idcode", length = 20)
     private String upIDCode;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", unique = true)

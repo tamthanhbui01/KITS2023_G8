@@ -16,13 +16,13 @@ public class Prescription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pre_id")
     private Long preID;
-    @Column(name = "pre_medicine")
+    @Column(name = "pre_medicine", nullable = false)
     private String preMedicine;
-    @Column(name = "pre_dosage")
+    @Column(name = "pre_dosage", nullable = false)
     private Integer preDosage;
-    @Column(name = "pre_duration")
+    @Column(name = "pre_duration", nullable = false)
     private String preDuration;
-    @Column(name = "pre_notes")
+    @Column(name = "pre_notes", length = 1000)
     private String preNotes;
     @Column(name = "pre_doctor")
     private String preDoctor;

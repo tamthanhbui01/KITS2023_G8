@@ -2,6 +2,8 @@ package com.example.backend.securities.auth;
 
 import com.example.backend.enums.RoleEnum;
 import com.example.backend.enums.UserStatusEnum;
+import com.example.backend.models.UserProfile;
+import com.example.backend.repositories.UserProfileRespository;
 import com.example.backend.securities.user.User;
 import com.example.backend.securities.user.RoleRepository;
 import com.example.backend.securities.user.UserRepository;
@@ -9,7 +11,6 @@ import com.example.backend.securities.config.JwtService;
 import com.example.backend.securities.token.Token;
 import com.example.backend.securities.token.TokenRepository;
 import com.example.backend.securities.token.TokenType;
-import com.example.backend.services.interfaces.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +30,9 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
+
+
+    private final UserProfileRespository userProfileRespository;
 
     public String register(RegisterRequest registerRequest){
         var user = User.builder()
@@ -58,8 +62,18 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(userDetails);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
+
+        String name;
+        if(user.getRole().getRoleName() == RoleEnum.ROLE_ADMIN){
+            name = "Admin";
+        }
+        else {
+            UserProfile userProfile = userProfileRespository.findByUserID(user.getUserID()).orElseThrow();
+            name = userProfile.getUpName();
+        }
+
         return AuthenticationResponse.builder()
-                .userAccount(user.getUserAccount())
+                .name(name)
                 .token(jwtToken)
                 .build();
     }

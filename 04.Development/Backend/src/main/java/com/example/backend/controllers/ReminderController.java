@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1.0/reminder/{userID}")
+@RequestMapping("api/v1.0/user/reminder/{userID}")
 public class ReminderController {
     @Autowired
     private ReminderService reminderService;
@@ -19,9 +19,7 @@ public class ReminderController {
                                                           @RequestParam int pageNo,
                                                           @RequestParam int pageSize,
                                                           @RequestParam(required = false) ReminderEnum reminderEnum) {
-        FindFromUserResponse<Reminder> response =  reminderService.getAllReminders(userID, pageNo, pageSize, reminderEnum);
-
-        return response;
+        return reminderService.getAllReminders(userID, pageNo, pageSize, reminderEnum);
     }
 
     @GetMapping("{remID}")
