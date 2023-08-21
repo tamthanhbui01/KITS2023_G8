@@ -12,3 +12,13 @@ Footer {
     margin: 0 !important;
     padding: 0 !important;
 }
+
+@media (max-width: 767px) {
+    .responsive-search {
+        display: none;
+    }
+}
+
+.ant-drawer-body {
+    padding: 0 !important
+}
