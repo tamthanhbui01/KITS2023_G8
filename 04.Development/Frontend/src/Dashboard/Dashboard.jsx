@@ -16,14 +16,23 @@ const baseUrl = "http://localhost:8080"
 function Dashboard() {
   const [data, setData] = useState([]);
   const [columnData, setColumnData]=useState([])
-  Promise.all([
-    fetch('https://gw.alipayobjects.com/os/bmw-prod/360c3eae-0c73-46f0-a982-4746a6095010.json')
+  useEffect(()=>{asyncFetch()},[])
+  const asyncFetch=()=>{ Promise.all([
+    fetch('https://gw.alipayobjects.com/os/bmw-prod/360c3eae-0c73-46f0-a982-4746a6095010.json').then((response) => response.json())
+    .then((json) => setData(json))
+    .catch((error) => {
+      console.log('fetch data failed', error);
+    })
       ,
-      fetch('https://gw.alipayobjects.com/os/antfincdn/8elHX%26irfq/stack-column-data.json')
-      
-    ]).then((values)=>{setData(values[0].json());setColumnData(values[1].json())})
+      fetch('https://gw.alipayobjects.com/os/antfincdn/8elHX%26irfq/stack-column-data.json').then((response) => response.json())
+      .then((json) => setColumnData(json))
+      .catch((error) => {
+        console.log('fetch data failed', error);
+      })])
+  }
+
   const config = {
-    data,
+    data:data,
     xField: 'timePeriod',
     yField: 'value',
     xAxis: {
@@ -31,7 +40,7 @@ function Dashboard() {
     },
   };
   const columnConfig = {
-    columnData,
+    data: columnData,
     isStack: true,
     xField: 'year',
     yField: 'value',
