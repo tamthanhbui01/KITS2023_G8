@@ -1,4 +1,4 @@
-import ResizeObserver from "resize-observer-polyfill";
+
 
 import SiderContent from "./SiderContent";
 import Users from "./Users/Users";
@@ -22,7 +22,7 @@ const { Text } = Typography;
 const { Search } = Input;
 import "./App.css";
 import { Link, Routes, Route } from "react-router-dom";
-import { GiHealthCapsule } from "react-icons/gi";
+
 
 import { HiMenu } from "react-icons/hi";
 import { useState, useEffect } from "react";
@@ -71,13 +71,6 @@ const items = [
   },
 ];
 function App() {
-  const [collapsed, handleCollapsed] = useState(false);
-
-  const [open, setOpen] = useState(false);
-
-  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const [showToggle, setShowToggle] = useState(window.innerWidth < 992);
-
   useEffect(() => {
     const handleResize = () => {
       setShowToggle(window.innerWidth < 992);
@@ -89,6 +82,12 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const [collapsed, handleCollapsed] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const [showToggle, setShowToggle] = useState(window.innerWidth < 992);
+
+  
   const showDrawer = () => {
     setIsDrawerVisible(true);
   };
@@ -118,7 +117,7 @@ function App() {
         open={open}
         onClose={() => setOpen(!open)}
         title="Customization"
-        width={200}
+        width={376}
       >
         helo ae
       </Drawer>
@@ -147,7 +146,7 @@ function App() {
             handleCollapsed(broken);
           }
         }}
-        onCollapse={(collapsed, type) => {
+        onCollapse={(collapsed) => {
           setIsDrawerVisible(false);
           handleCollapsed(collapsed);
         }}
