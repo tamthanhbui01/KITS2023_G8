@@ -1,5 +1,6 @@
 package com.example.backend.models;
 
+import com.example.backend.securities.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +8,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "take_medicines")
+@Table(name = "others")
 @NoArgsConstructor
 @AllArgsConstructor
-public class TakeMedicine{
+public class Other{
     @Id
     @Column(name = "rem_id")
     private Long remID;
@@ -21,6 +22,6 @@ public class TakeMedicine{
     private Reminder reminder;
 
     @ManyToOne
-    @JoinColumn(name = "pre_id", referencedColumnName = "pre_id")
-    private Prescription prescription;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 }

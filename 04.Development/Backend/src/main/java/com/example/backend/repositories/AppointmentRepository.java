@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
@@ -24,4 +25,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
         order by a.appDatetime desc
     """)
     List<Appointment> findAllAppointmentOfThis(Long userID);
+    @Query("""
+        select a from Appointment a, User u
+        where u.userID =:userID
+            and u.userID = a.user.userID
+            and a.appID = :appID
+    """)
+    Optional<Appointment> findByUserIDAndAppointmentID(Long userID, Long appID);
 }

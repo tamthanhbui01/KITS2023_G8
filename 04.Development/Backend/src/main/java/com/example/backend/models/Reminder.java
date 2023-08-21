@@ -30,5 +30,11 @@ public class Reminder {
     @Column(name = "rem_type", insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private ReminderEnum remType;
+//    @OneToOne(mappedBy = "reminder", cascade = CascadeType.ALL)
+//    private TakeMedicine takeMedicine;
+//    @OneToOne(mappedBy = "reminder", cascade = CascadeType.ALL)
+//    private RemindAppointment remindAppointment;
+//    @OneToOne(mappedBy = "reminder", cascade = CascadeType.ALL)
+//    private Other other;
     // type, datetime, message, app_id, pre_id
 }
