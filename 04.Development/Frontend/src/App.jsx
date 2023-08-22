@@ -1,5 +1,3 @@
-
-
 import SiderContent from "./SiderContent";
 import Users from "./Users/Users";
 import Dashboard from "./Dashboard/Dashboard";
@@ -22,7 +20,6 @@ const { Text } = Typography;
 const { Search } = Input;
 import "./App.css";
 import { Link, Routes, Route } from "react-router-dom";
-
 
 import { HiMenu } from "react-icons/hi";
 import { useState, useEffect } from "react";
@@ -74,7 +71,10 @@ function App() {
   useEffect(() => {
     const handleResize = () => {
       setShowToggle(window.innerWidth < 992);
+      handleCollapsed(window.innerWidth < 992);
     };
+
+    handleResize(); 
 
     window.addEventListener("resize", handleResize);
 
@@ -82,12 +82,12 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   const [collapsed, handleCollapsed] = useState(false);
   const [open, setOpen] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [showToggle, setShowToggle] = useState(window.innerWidth < 992);
 
-  
   const showDrawer = () => {
     setIsDrawerVisible(true);
   };
@@ -97,21 +97,20 @@ function App() {
   };
 
   return (
-    
     <Layout style={{ minHeight: "100vh" }}>
       <FloatButton.Group shape="circle">
-          <FloatButton
-            style={{ backgroudColor: "#005298" }}
-            tooltip={<div>Customize</div>}
-            onClick={() => setOpen(!open)}
-            icon={<GiMagicBroom />}
-          />
+        <FloatButton
+          style={{ backgroudColor: "#005298" }}
+          tooltip={<div>Customize</div>}
+          onClick={() => setOpen(!open)}
+          icon={<GiMagicBroom />}
+        />
 
-          <FloatButton.BackTop
-            tooltip={<div>BackTop</div>}
-            visibilityHeight={0}
-          />
-        </FloatButton.Group>
+        <FloatButton.BackTop
+          tooltip={<div>BackTop</div>}
+          visibilityHeight={0}
+        />
+      </FloatButton.Group>
       <Drawer
         headerStyle={{ background: "#005298" }}
         open={open}
@@ -138,8 +137,6 @@ function App() {
         breakpoint="lg"
         collapsedWidth={showToggle ? 0 : 80}
         trigger={null}
-        // onBreakpoint={(broken) => handleCollapsed(broken)}
-        // onCollapse={(collapsed) => handleCollapsed(collapsed)}
         onBreakpoint={(broken) => {
           if (broken) {
             setIsDrawerVisible(false);
@@ -152,9 +149,7 @@ function App() {
         }}
       >
         <SiderContent collapsed={collapsed} />
-        
       </Sider>
-
       <Layout>
         <Header style={{ background: "white" }}>
           <div
@@ -169,16 +164,16 @@ function App() {
             <div
               style={{ display: "flex", alignItems: "center", flex: 1, gap: 8 }}
             >
-              {showToggle ? 
-                <Button icon={<HiMenu />} onClick={showDrawer} />
-              : 
+              {showToggle ? (
+                <Button type="primary" icon={<HiMenu />} onClick={showDrawer} />
+              ) : (
                 <Button
                   icon={<HiMenu />}
                   onClick={() => {
                     handleCollapsed(!collapsed);
                   }}
                 />
-              }
+              )}
 
               <Search
                 className="responsive-search"
