@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.*;
 public class PrescriptionController {
     @Autowired
     private PrescriptionService prescriptionService;
-    @GetMapping
+    @GetMapping("get-all/{upID}")
     public FindFromUserResponse<Prescription> getAllPrescriptions(
-            @PathVariable Long userID,
+            @PathVariable Long upID,
             @RequestParam int pageNo,
             @RequestParam int pageSize
     ){
-        return prescriptionService.getAllPrescriptions(userID, pageNo, pageSize);
+        return prescriptionService.getAllPrescriptions(upID, pageNo, pageSize);
     }
-    @GetMapping("{preID}")
+    @GetMapping("get-single/{preID}")
     public Prescription getSinglePrescription(@PathVariable Long preID) {
         return prescriptionService.getSinglePrescription(preID);
     }
-    @PostMapping
-    public String createPrescription(@PathVariable Long userID, @RequestBody CreateOrUpdatePrescriptionRequest createPrescriptionRequest) {
-        return prescriptionService.createPrescription(userID, createPrescriptionRequest);
+    @PostMapping("{upID}")
+    public String createPrescription(@PathVariable Long upID, @RequestBody CreateOrUpdatePrescriptionRequest createPrescriptionRequest) {
+        return prescriptionService.createPrescription(upID, createPrescriptionRequest);
     }
     @PutMapping("{preID}")
     public String updatePrescription(@PathVariable Long preID, @RequestBody CreateOrUpdatePrescriptionRequest updatePrescriptionRequest) {

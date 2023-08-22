@@ -4,7 +4,9 @@ import com.example.backend.controllers.controller_requests.CreateOrUpdatePrescri
 import com.example.backend.controllers.controller_responses.FindFromUserResponse;
 import com.example.backend.generics.Pagination;
 import com.example.backend.models.Prescription;
+import com.example.backend.models.UserProfile;
 import com.example.backend.repositories.PrescriptionRepository;
+import com.example.backend.repositories.UserProfileRespository;
 import com.example.backend.securities.user.User;
 import com.example.backend.securities.user.UserRepository;
 import com.example.backend.services.interfaces.PrescriptionService;
@@ -18,10 +20,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
     @Autowired
-    private UserRepository userRepository;
+    private UserProfileRespository userProfileRespository;
     @Override
-    public FindFromUserResponse<Prescription> getAllPrescriptions(Long userID, int pageNo, int pageSize) {
-        List<Prescription> allPrescriptions = prescriptionRepository.findAllPrescriptions(userID);
+    public FindFromUserResponse<Prescription> getAllPrescriptions(Long upID, int pageNo, int pageSize) {
+        List<Prescription> allPrescriptions = prescriptionRepository.findAllPrescriptions(upID);
         //Phan trang
         Pagination<Prescription> pagination = new Pagination<>();
         List<Prescription> prescriptions = pagination.pagination(allPrescriptions, pageNo, pageSize);
@@ -40,9 +42,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
-    public String createPrescription(Long userID, CreateOrUpdatePrescriptionRequest createPrescriptionRequest) {
-        User user = userRepository.findByUserID(userID).orElseThrow();
-        if(user == null) return "No user with userID = " + userID;
+    public String createPrescription(Long upID, CreateOrUpdatePrescriptionRequest createPrescriptionRequest) {
+        UserProfile userProfile = userProfileRespository.findByUpID(upID).orElseThrow();
 
         Prescription prescription = new Prescription();
         prescription.setPreMedicine(createPrescriptionRequest.getPreMedicine());
@@ -50,7 +51,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescription.setPreDuration(createPrescriptionRequest.getPreDuration());
         prescription.setPreNotes(createPrescriptionRequest.getPreNotes());
         prescription.setPreDoctor(createPrescriptionRequest.getPreDoctor());
-        prescription.setUser(user);
+        prescription.setUserProfile(userProfile);
         prescriptionRepository.save(prescription);
         return "Create a prescription successfully!";
     }

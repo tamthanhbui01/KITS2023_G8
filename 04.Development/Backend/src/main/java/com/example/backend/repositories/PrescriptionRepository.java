@@ -12,10 +12,8 @@ import java.util.Optional;
 public interface PrescriptionRepository extends JpaRepository<Prescription, Long> {
     @Query("""
         select p from Prescription p
-        where p.user.userID = :userID
+        where p.userProfile.upID = :upID
         order by p.preMedicine
     """)
-    List<Prescription> findAllPrescriptions(Long userID);
-    @Query("select p from Prescription p where p.user.userID = :userID and p.preID =:preID")
-    Optional<Prescription> findByUserIDAndPrescriptionID(Long userID, Long preID);
+    List<Prescription> findAllPrescriptions(Long upID);
 }

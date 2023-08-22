@@ -14,26 +14,26 @@ public class ReminderController {
     @Autowired
     private ReminderService reminderService;
 
-    @GetMapping
-    public FindFromUserResponse<Reminder> getAllReminders(@PathVariable Long userID,
+    @GetMapping("get-all/{upID}")
+    public FindFromUserResponse<Reminder> getAllReminders(@PathVariable Long upID,
                                                           @RequestParam int pageNo,
                                                           @RequestParam int pageSize,
                                                           @RequestParam(required = false) ReminderEnum reminderEnum) {
-        return reminderService.getAllReminders(userID, pageNo, pageSize, reminderEnum);
+        return reminderService.getAllReminders(upID, pageNo, pageSize, reminderEnum);
     }
 
-    @GetMapping("{remID}")
+    @GetMapping("get-single/{remID}")
     public Reminder getSingleReminder(@PathVariable Long remID) {
         return reminderService.getSingleReminder(remID);
     }
 
-    @PostMapping
-    public String createReminder(@PathVariable Long userID,
+    @PostMapping("{upID}")
+    public String createReminder(@PathVariable Long upID,
                                  @RequestParam(required = false) Long appID,
                                  @RequestParam(required = false) Long preID,
                                  @RequestParam ReminderEnum reminderEnum,
                                  @RequestBody ReminderRequest reminderRequest) {
-        return reminderService.createReminder(userID, appID, preID, reminderEnum, reminderRequest);
+        return reminderService.createReminder(upID, appID, preID, reminderEnum, reminderRequest);
     }
     @PutMapping("{remID}")
     public String updateReminder(@PathVariable Long remID, @RequestBody ReminderRequest reminderRequest) {

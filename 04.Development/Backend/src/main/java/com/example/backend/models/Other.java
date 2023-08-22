@@ -22,6 +22,6 @@ public class Other{
     private Reminder reminder;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+    @JoinColumn(name = "up_id", referencedColumnName = "up_id")
+    private UserProfile userProfile;
 }

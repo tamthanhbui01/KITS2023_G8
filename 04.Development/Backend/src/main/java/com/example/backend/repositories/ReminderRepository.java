@@ -11,30 +11,30 @@ import java.util.Optional;
 @Repository
 public interface ReminderRepository extends JpaRepository<Reminder, Long> {
     @Query("""
-        select r from Reminder r, RemindAppointment ra, Appointment a, User u
-        where a.user.userID = u.userID and u.userID = :userID
+        select r from Reminder r, RemindAppointment ra, Appointment a
+        where a.userProfile.upID = :upID
             and a.appID = ra.appointment.appID
             and ra.remID = r.remID
         order by r.remDatetime desc
     """)
-    List<Reminder> findAllByUserIDForRemindAppointment(Long userID);
+    List<Reminder> findAllByUserProfileIDForRemindAppointment(Long upID);
 
     @Query("""
         select r from Reminder r, TakeMedicine tm, Prescription p
-        where p.user.userID = :userID
+        where p.userProfile.upID = :upID
             and p.preID = tm.prescription.preID
             and tm.remID = r.remID
         order by r.remDatetime desc
     """)
-    List<Reminder> findAllByUserIDForTakeMedicine(Long userID);
+    List<Reminder> findAllByUserProfileIDForTakeMedicine(Long upID);
 
     @Query("""
         select r from Reminder r, Other o
-        where o.user.userID = :userID
+        where o.userProfile.upID = :upID
             and o.remID = r.remID
         order by r.remDatetime desc
     """)
-    List<Reminder> findAllByUserIDForOther(Long userID);
+    List<Reminder> findAllByUserProfileIDForOther(Long upID);
     @Query(" select r from Reminder r where r.remID =:remID")
     Optional<Reminder> findByRemID(Long remID);
 }

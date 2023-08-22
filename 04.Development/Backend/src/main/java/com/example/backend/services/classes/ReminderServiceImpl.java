@@ -30,34 +30,36 @@ public class ReminderServiceImpl implements ReminderService {
     private PrescriptionRepository prescriptionRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserProfileRespository userProfileRespository;
 
     // Cac ham xu ly getAllreminders:
-    private List<Reminder> remindAppointments (Long userID) {
-        return reminderRepository.findAllByUserIDForRemindAppointment(userID);
+    private List<Reminder> remindAppointments (Long upID) {
+        return reminderRepository.findAllByUserProfileIDForRemindAppointment(upID);
     }
-    private List<Reminder> takeMedicines (Long userID) {
-        return reminderRepository.findAllByUserIDForTakeMedicine(userID);
+    private List<Reminder> takeMedicines (Long upID) {
+        return reminderRepository.findAllByUserProfileIDForTakeMedicine(upID);
     }
-    private List<Reminder> others(Long userID) {
-        return reminderRepository.findAllByUserIDForOther(userID);
+    private List<Reminder> others(Long upID) {
+        return reminderRepository.findAllByUserProfileIDForOther(upID);
     }
     @Override
-    public FindFromUserResponse<Reminder> getAllReminders(Long userID, int pageNo, int pageSize, ReminderEnum reminderEnum) {
+    public FindFromUserResponse<Reminder> getAllReminders(Long upID, int pageNo, int pageSize, ReminderEnum reminderEnum) {
         List<Reminder> allReminders;
         if(reminderEnum == ReminderEnum.REMIND_APPOINTMENTS){
-            allReminders = this.remindAppointments(userID);
+            allReminders = this.remindAppointments(upID);
         }
         else if(reminderEnum == ReminderEnum.TAKE_MEDICINES){
-            allReminders = this.takeMedicines(userID);
+            allReminders = this.takeMedicines(upID);
         }
         else if(reminderEnum == ReminderEnum.OTHERS) {
-            allReminders = this.others(userID);
+            allReminders = this.others(upID);
         }
         else if(reminderEnum == null) {
             allReminders = new ArrayList<>();
-            allReminders.addAll(this.remindAppointments(userID));
-            allReminders.addAll(this.takeMedicines(userID));
-            allReminders.addAll(this.others(userID));
+            allReminders.addAll(this.remindAppointments(upID));
+            allReminders.addAll(this.takeMedicines(upID));
+            allReminders.addAll(this.others(upID));
             // Sap xep lai theo datetime
             Collections.sort(allReminders, new Comparator<Reminder>() {
                 @Override
@@ -85,7 +87,7 @@ public class ReminderServiceImpl implements ReminderService {
     }
 
     @Override
-    public String createReminder(Long userID, Long appID, Long preID, ReminderEnum reminderEnum, ReminderRequest reminderRequest) throws NoSuchElementException {
+    public String createReminder(Long upID, Long appID, Long preID, ReminderEnum reminderEnum, ReminderRequest reminderRequest) throws NoSuchElementException {
         Reminder reminder = new Reminder();
         reminder.setRemDatetime(reminderRequest.getDateTime());
         reminder.setRemMessage(reminderRequest.getMessage());
@@ -112,11 +114,11 @@ public class ReminderServiceImpl implements ReminderService {
             return "Successfully!";
         }
         if(reminderEnum == ReminderEnum.OTHERS) {
-            User user = userRepository.findByUserID(userID).orElseThrow();
+            UserProfile userProfile = userProfileRespository.findByUpID(upID).orElseThrow();
 
             Other other = new Other();
             other.setReminder(reminder);
-            other.setUser(user);
+            other.setUserProfile(userProfile);
 
             otherRepository.save(other);
             return "Successfully!";

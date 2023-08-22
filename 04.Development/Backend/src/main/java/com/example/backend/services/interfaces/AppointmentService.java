@@ -9,7 +9,7 @@ import com.example.backend.models.Appointment;
 import java.util.List;
 
 public interface AppointmentService {
-    FindFromUserResponse<Appointment> getAllAppointments(Long userID, int pageNo, int pageSize, AppointmentStatusEnum appointmentStatus);
+    FindFromUserResponse<Appointment> getAllAppointments(Long upID, int pageNo, int pageSize, AppointmentStatusEnum appointmentStatus);
 
     String createAppointment(Long userID, CreateAppointmentRequest createAppointmentRequest);
 

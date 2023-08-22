@@ -27,7 +27,7 @@ public class Prescription {
     @Column(name = "pre_doctor")
     private String preDoctor;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+    @JoinColumn(name = "up_id", referencedColumnName = "up_id")
+    private UserProfile userProfile;
     // medicine, dosage, duration, notes, doctor
 }

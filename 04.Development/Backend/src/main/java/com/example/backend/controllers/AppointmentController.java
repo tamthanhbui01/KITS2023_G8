@@ -1,7 +1,6 @@
 package com.example.backend.controllers;
 
 import com.example.backend.controllers.controller_requests.CreateAppointmentRequest;
-import com.example.backend.controllers.controller_responses.AppointmentFindFromUserResponse;
 import com.example.backend.controllers.controller_responses.FindFromUserResponse;
 import com.example.backend.enums.AppointmentStatusEnum;
 import com.example.backend.models.Appointment;
@@ -17,15 +16,14 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
 
     //User lấy thông tin tất cả cuộc hẹn
-    @GetMapping
-    public FindFromUserResponse<Appointment> getAllAppointments(@PathVariable Long userID,
+    @GetMapping("get-all/{upID}")
+    public FindFromUserResponse<Appointment> getAllAppointments(@PathVariable Long upID,
                                                                 @RequestParam int pageNo,
                                                                 @RequestParam int pageSize,
                                                                 @RequestParam(required = false) AppointmentStatusEnum appointmentStatus) {
-//        if(appointmentStatus == null) return appointmentService.getAllAppointments(userID, pageNo, pageSize);
-        return appointmentService.getAllAppointments(userID, pageNo, pageSize, appointmentStatus);
+        return appointmentService.getAllAppointments(upID, pageNo, pageSize, appointmentStatus);
     }
-    @GetMapping("{appointmentID}")
+    @GetMapping("get-single/{appointmentID}")
     public Appointment getSingleAppointment(@PathVariable Long appointmentID) {
         return appointmentService.getSingleAppointment(appointmentID);
     }
