@@ -12,4 +12,6 @@ public interface BackgroundService {
     Background getSingleBackground(Long userID, LocalDate bgDate);
 
     String createBackground(Long userID, BackgroundRequest backgroundRequest);
+
+    String updateBackground(BackgroundRequest backgroundRequest);
 }

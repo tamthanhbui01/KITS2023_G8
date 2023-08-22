@@ -1,5 +1,6 @@
 package com.example.backend.models;
 
+import com.example.backend.enums.UserProfileEnum;
 import com.example.backend.securities.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class UserProfile {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", unique = true)
     private User user;
-    @OneToOne(mappedBy = "userProfile")
-    private MedicalRecord medicalRecord;
+    @Column(name = "up_role")
+    @Enumerated(EnumType.STRING)
+    private UserProfileEnum upRole;
 }

@@ -34,7 +34,7 @@ public class Appointment {
     @Column(name = "app_status")
     @Enumerated(EnumType.STRING)
     private AppointmentStatusEnum appStatus;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 

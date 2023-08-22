@@ -1,6 +1,7 @@
 package com.example.backend.securities.auth;
 
 import com.example.backend.enums.RoleEnum;
+import com.example.backend.enums.UserProfileEnum;
 import com.example.backend.enums.UserStatusEnum;
 import com.example.backend.models.UserProfile;
 import com.example.backend.repositories.UserProfileRespository;
@@ -68,7 +69,7 @@ public class AuthenticationService {
             name = "Admin";
         }
         else {
-            UserProfile userProfile = userProfileRespository.findByUserID(user.getUserID()).orElseThrow();
+            UserProfile userProfile = userProfileRespository.findSingleByUserID(user.getUserID(), UserProfileEnum.MAIN).orElseThrow();
             name = userProfile.getUpName();
         }
 

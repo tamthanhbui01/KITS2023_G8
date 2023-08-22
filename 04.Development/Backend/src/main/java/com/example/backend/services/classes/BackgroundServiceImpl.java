@@ -37,14 +37,25 @@ public class BackgroundServiceImpl implements BackgroundService {
 
     @Override
     public Background getSingleBackground(Long userID, LocalDate bgDate) {
-        return backgroundRepository.findByUserIDAndBackgroundDate(userID, bgDate);
+        return backgroundRepository.findByUserIDAndBackgroundDate(userID, bgDate).orElseThrow();
     }
 
     @Override
     public String createBackground(Long userID, BackgroundRequest backgroundRequest) {
         MedicalRecord medicalRecord = medicalRecordRepository.findByUserID(userID);
-        Background.BackgroundId id = new Background.BackgroundId(medicalRecord.getMedID(), LocalDate.now());
-        backgroundRepository.save(new Background(id, medicalRecord, backgroundRequest.getBackgroundDescription()));
+        Background background = new Background();
+        background.setBgDate(LocalDate.now());
+        background.setMedicalRecord(medicalRecord);
+        background.setBgDescription(backgroundRequest.getBackgroundDescription());
+        backgroundRepository.save(background);
         return "create successfully!";
+    }
+
+    @Override
+    public String updateBackground(BackgroundRequest backgroundRequest) {
+        Background background = backgroundRepository.findBackgroundByBgDate(LocalDate.now()).orElseThrow();
+        background.setBgDescription(backgroundRequest.getBackgroundDescription());
+        backgroundRepository.save(background);
+        return "update successfully!";
     }
 }

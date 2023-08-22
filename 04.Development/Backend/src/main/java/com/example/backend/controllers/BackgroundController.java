@@ -26,4 +26,8 @@ public class BackgroundController {
     public String createBackground(@PathVariable Long userID, @RequestBody BackgroundRequest backgroundRequest) {
         return backgroundService.createBackground(userID, backgroundRequest);
     }
+    @PutMapping
+    public String updateBackground(@RequestBody BackgroundRequest backgroundRequest) {
+        return backgroundService.updateBackground(backgroundRequest);
+    }
 }

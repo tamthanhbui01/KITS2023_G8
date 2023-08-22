@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BackgroundRepository extends JpaRepository<Background, Long> {
@@ -15,16 +16,24 @@ public interface BackgroundRepository extends JpaRepository<Background, Long> {
         where u.user.userID = :userID
             and u.upID = m.userProfile.upID
             and m.medID = b.medicalRecord.medID
-        order by b.id.bgDate desc
+        order by b.bgDate desc
     """)
     List<Background> findAllByUserID(Long userID);
 
     @Query("""
         select b from Background b, MedicalRecord m, UserProfile u
         where u.user.userID = :userID
-            and b.id.bgDate = :bgDate
+            and b.bgDate = :bgDate
             and u.upID = m.userProfile.upID
             and m.medID = b.medicalRecord.medID
     """)
-    Background findByUserIDAndBackgroundDate(Long userID, LocalDate bgDate);
+    Optional<Background> findByUserIDAndBackgroundDate(Long userID, LocalDate bgDate);
+
+    @Query("select b from Background b")
+    List<Background> findBackgroundByAll();
+
+    @Query("""
+        select b from Background b where b.bgDate = :now
+    """)
+    Optional<Background> findBackgroundByBgDate(LocalDate now);
 }
