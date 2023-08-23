@@ -1,7 +1,7 @@
 import SiderContent from "./SiderContent";
 import Dashboard from "./Dashboard/Dashboard";
 import Appointment from "./Appointment/Appointment";
-import User from "./User/Users";
+import User from "./User/User";
 import Prescription from "./Prescription/Prescription";
 import Reminder from "./Reminder/Reminder";
 import {
