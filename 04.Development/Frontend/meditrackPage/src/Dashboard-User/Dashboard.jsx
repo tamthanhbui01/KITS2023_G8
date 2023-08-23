@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-
 import React, { Component } from "react";
 import { Layout, Menu, Row, Col, Avatar, Switch, Drawer } from "antd";
 import {
@@ -7,24 +6,26 @@ import {
   CalendarOutlined,
   FileOutlined,
   TeamOutlined,
-  SettingOutlined,
-  BellOutlined,
-  UserOutlined,
   UserAddOutlined,
   ClockCircleOutlined,
+  BellOutlined,
+  UserOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
-import MedicineManagement from "./MedicineManagement";
-import AppointmentManagement from "./AppointmentManagement";
-import HealthRecordManagement from "./HealthRecordManagement";
-import HealthCareProviders from "./HealthcareProviders";
-import FamilyMembers from "./FamilyCare";
-import Reminders from "./Reminder";
+import Home from "../Home/Home";
+import MedicineManagement from "../Prescription/MedicineManagement";
+import AppointmentManagement from "../Appointment/AppointmentManagement";
+import HealthRecordManagement from "../HealthRecordManagement/HealthRecordManagement";
+import HealthCareProviders from "../HealthCareProviders/HealthcareProviders";
+import FamilyMembers from "../FamilyCare";
+import Reminders from "../Reminder/Reminder";
+import logo from "../img/logo.svg";
 
 const { Content, Sider } = Layout;
 
 class Dashboard extends Component {
   state = {
-    selectedMenu: "medicine",
+    selectedMenu: "home",
     showUserProfile: false,
     darkMode: false,
   };
@@ -55,6 +56,8 @@ class Dashboard extends Component {
     const { selectedMenu } = this.state;
 
     switch (selectedMenu) {
+      case "home":
+        return <Home />;
       case "medicine":
         return <MedicineManagement />;
       case "appointments":
@@ -78,12 +81,30 @@ class Dashboard extends Component {
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Sider width={200} theme={darkMode ? "dark" : "light"}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "64px",
+              background: "#f0f2f5",
+            }}
+          >
+            <img src={logo} alt="Logo" style={{ height: "32px" }} />
+          </div>
           <Menu
             mode="vertical"
             selectedKeys={[selectedMenu]}
             onSelect={this.handleMenuSelect}
-            style={{ background: darkMode ? "#001529" : "#f0f2f5" }}
+            style={{ background: "#f0f2f5" }}
           >
+            <Menu.Item
+              key="home"
+              icon={<HomeOutlined />}
+              style={{ fontSize: "16px" }}
+            >
+              Trang chủ
+            </Menu.Item>
             <Menu.Item
               key="medicine"
               icon={<MedicineBoxOutlined />}
@@ -131,7 +152,7 @@ class Dashboard extends Component {
         <Layout>
           <Layout.Header
             style={{
-              background: darkMode ? "#001529" : "#fff",
+              background: "#fff",
               padding: "0 16px",
               display: "flex",
               alignItems: "center",
@@ -140,26 +161,11 @@ class Dashboard extends Component {
           >
             <Row align="middle">
               <Col>
-                {/* Thêm logo website tại đây */}
-                <Avatar
-                  src="path/to/logo.png"
-                  alt="Logo"
-                  style={{ marginRight: "16px" }}
-                />
-              </Col>
-              <Col>
                 <BellOutlined
                   style={{
                     fontSize: "20px",
                     marginRight: "16px",
-                    color: darkMode ? "#fff" : "rgba(0, 0, 0, 0.65)",
                   }}
-                />
-                <Switch
-                  checked={darkMode}
-                  onChange={this.handleToggleDarkMode}
-                  checkedChildren="DarkMode"
-                  unCheckedChildren="Light Mode"
                 />
                 <Avatar
                   icon={<UserOutlined />}

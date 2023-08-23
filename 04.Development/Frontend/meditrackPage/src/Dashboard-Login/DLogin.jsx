@@ -7,7 +7,7 @@ import "./DLogin.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Drawer } from "antd";
-import Dashboard from "../Dashboard"; // Import Dashboard component
+import Dashboard from "../Dashboard-User/Dashboard"; // Import Dashboard component
 
 const notify = (text) => toast(text);
 

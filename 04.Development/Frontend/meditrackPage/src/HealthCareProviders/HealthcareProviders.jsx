@@ -1,11 +1,11 @@
 import React from "react";
 import { Card, Row, Col, Modal, Button } from "antd";
-import hospital1 from "./img/Hospital1.svg";
-import hospital2 from "./img/Hospital2.svg";
-import hospital3 from "./img/Hospital3.svg";
-import hospital4 from "./img/Hospital4.svg";
-import hospital5 from "./img/Hospital5.svg";
-import hospital6 from "./img/Hospital6.svg";
+import hospital1 from "../img/Hospital1.svg";
+import hospital2 from "../img/Hospital2.svg";
+import hospital3 from "../img/Hospital3.svg";
+import hospital4 from "../img/Hospital4.svg";
+import hospital5 from "../img/Hospital5.svg";
+import hospital6 from "../img/Hospital6.svg";
 import "./healthCareProviders.css";
 const healthCareProviders = [
   {

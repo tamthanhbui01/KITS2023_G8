@@ -166,19 +166,19 @@ class MedicineManagement extends React.Component {
   };
 
   saveManualLog = () => {
-    // eslint-disable-next-line no-unused-vars
-    const { manualLog, medicationHistory } = this.state;
+    const { manualLog } = this.state;
 
     if (manualLog) {
+      // eslint-disable-next-line no-unused-vars
       const logEntry = {
         content: manualLog,
         timestamp: new Date().toLocaleString(),
       };
 
-      this.setState((prevState) => ({
-        medicationHistory: [...prevState.medicationHistory, logEntry],
+      this.setState({
         manualLog: "",
-      }));
+      });
+
       message.success("Đã ghi nhật ký thủ công.");
     } else {
       message.warning("Vui lòng nhập nội dung nhật ký.");
@@ -214,6 +214,7 @@ class MedicineManagement extends React.Component {
                 name="name"
                 value={newMedicine.name}
                 onChange={this.handleInputChange}
+                placeholder="Tên thuốc(VD: Panadol,...)"
               />
             </Form.Item>
             <Form.Item label="Liều lượng">
@@ -221,6 +222,7 @@ class MedicineManagement extends React.Component {
                 name="dosage"
                 value={newMedicine.dosage}
                 onChange={this.handleInputChange}
+                placeholder="VD: 1 viên, 10 ml, 2 muỗng canh, v.v"
               />
             </Form.Item>
             <Form.Item label="Tần suất">
@@ -228,6 +230,7 @@ class MedicineManagement extends React.Component {
                 name="frequency"
                 value={newMedicine.frequency}
                 onChange={this.handleInputChange}
+                placeholder="VD: Ngày uống 3 lần, mỗi lần 1 viên"
               />
             </Form.Item>
             <Form.Item label="Bác sĩ kê đơn">
@@ -235,6 +238,7 @@ class MedicineManagement extends React.Component {
                 name="prescribedBy"
                 value={newMedicine.prescribedBy}
                 onChange={this.handleInputChange}
+                placeholder="Nhập tên bác sĩ"
               />
             </Form.Item>
           </Form>
