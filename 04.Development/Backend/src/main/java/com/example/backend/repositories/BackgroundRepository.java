@@ -11,29 +11,16 @@ import java.util.Optional;
 
 @Repository
 public interface BackgroundRepository extends JpaRepository<Background, Long> {
-    @Query("""
-        select b from Background b, MedicalRecord m, UserProfile u
-        where u.user.userID = :userID
-            and u.upID = m.userProfile.upID
-            and m.medID = b.medicalRecord.medID
-        order by b.bgDate desc
-    """)
-    List<Background> findAllByUserID(Long userID);
-
-    @Query("""
-        select b from Background b, MedicalRecord m, UserProfile u
-        where u.user.userID = :userID
-            and b.bgDate = :bgDate
-            and u.upID = m.userProfile.upID
-            and m.medID = b.medicalRecord.medID
-    """)
-    Optional<Background> findByUserIDAndBackgroundDate(Long userID, LocalDate bgDate);
 
     @Query("select b from Background b")
     List<Background> findBackgroundByAll();
 
     @Query("""
-        select b from Background b where b.bgDate = :now
+        select b from Background b where b.bgDate = :now and b.medicalRecord.medID=:medID
     """)
-    Optional<Background> findBackgroundByBgDate(LocalDate now);
+    Optional<Background> findBackgroundByBgDate(Long medID, LocalDate now);
+    @Query("select b from Background b where b.medicalRecord.medID =:medID order by b.bgDate desc")
+    List<Background> findAllByMedID(Long medID);
+    @Query("select b from Background b where b.medicalRecord.medID = :medID and b.bgDate = :bgDate")
+    Optional<Background> findByMedIDAndBackgroundDate(Long medID, LocalDate bgDate);
 }

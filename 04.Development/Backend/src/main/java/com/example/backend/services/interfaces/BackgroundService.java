@@ -7,11 +7,11 @@ import com.example.backend.models.Background;
 import java.time.LocalDate;
 
 public interface BackgroundService {
-    FindFromUserResponse<Background> getAllBackgrounds(Long userID, int pageNo, int pageSize);
+    FindFromUserResponse<Background> getAllBackgrounds(Long medID, int pageNo, int pageSize);
 
-    Background getSingleBackground(Long userID, LocalDate bgDate);
+    Background getSingleBackground(Long medID, LocalDate bgDate);
 
-    String createBackground(Long userID, BackgroundRequest backgroundRequest);
+    String createBackground(Long medID, BackgroundRequest backgroundRequest);
 
-    String updateBackground(BackgroundRequest backgroundRequest);
+    String updateBackground(Long medID, BackgroundRequest backgroundRequest);
 }

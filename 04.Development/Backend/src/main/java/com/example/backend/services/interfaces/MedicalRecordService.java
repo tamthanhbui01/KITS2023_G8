@@ -7,7 +7,7 @@ import com.example.backend.models.UserProfile;
 public interface MedicalRecordService {
     void createMedicalRecord(UserProfile userProfile);
 
-    MedicalRecord getMedicalRecord(Long userID);
+    MedicalRecord getMedicalRecord(Long upID);
 
-    String updateMedicalRecord(Long userID, UpdateMedicalRequest updateMedicalRequest);
+    String updateMedicalRecord(Long upID, UpdateMedicalRequest updateMedicalRequest);
 }

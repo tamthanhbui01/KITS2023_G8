@@ -5,12 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MedicalRecordRepository extends JpaRepository<MedicalRecord, Long> {
-    @Query("""
-        select m from MedicalRecord m, UserProfile u
-        where u.user.userID = :userID
-            and u.upID = m.userProfile.upID
-    """)
-    MedicalRecord findByUserID(Long userID);
+    @Query(" select mr from MedicalRecord mr where mr.userProfile.upID = :upID")
+    Optional<MedicalRecord> findByUserProfileID(Long upID);
 }

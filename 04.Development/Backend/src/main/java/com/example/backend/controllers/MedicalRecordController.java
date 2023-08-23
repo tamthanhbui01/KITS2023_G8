@@ -8,16 +8,16 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1.0/user/medical-record/{userID}")
+@RequestMapping("api/v1.0/user/medical-record/{upID}")
 public class MedicalRecordController {
     @Autowired
     private MedicalRecordService medicalRecordService;
     @GetMapping
-    public MedicalRecord getMedicalRecord(@PathVariable Long userID) {
-        return medicalRecordService.getMedicalRecord(userID);
+    public MedicalRecord getMedicalRecord(@PathVariable Long upID) {
+        return medicalRecordService.getMedicalRecord(upID);
     }
     @PutMapping
-    public String updateMedicalRecord(@PathVariable Long userID, @RequestBody UpdateMedicalRequest updateMedicalRequest) {
-        return medicalRecordService.updateMedicalRecord(userID, updateMedicalRequest);
+    public String updateMedicalRecord(@PathVariable Long upID, @RequestBody UpdateMedicalRequest updateMedicalRequest) {
+        return medicalRecordService.updateMedicalRecord(upID, updateMedicalRequest);
     }
 }

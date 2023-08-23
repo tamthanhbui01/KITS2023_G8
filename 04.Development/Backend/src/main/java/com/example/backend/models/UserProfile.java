@@ -18,7 +18,7 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "up_id")
     private Long upID;
-    @Column(nullable = false, name = "up_name")
+    @Column(name = "up_name")
     private String upName;
     @Column(name = "up_dob") // Date of Birth
     private LocalDate upDoB;

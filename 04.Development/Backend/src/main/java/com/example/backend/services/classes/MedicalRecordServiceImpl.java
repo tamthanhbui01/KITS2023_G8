@@ -14,8 +14,8 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     private MedicalRecordRepository medicalRecordRepository;
 
     @Override
-    public MedicalRecord getMedicalRecord(Long userID) {
-        return medicalRecordRepository.findByUserID(userID);
+    public MedicalRecord getMedicalRecord(Long upID) {
+        return medicalRecordRepository.findByUserProfileID(upID).orElseThrow();
     }
 
     @Override
@@ -26,8 +26,8 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
     @Override
-    public String updateMedicalRecord(Long userID, UpdateMedicalRequest updateMedicalRequest) {
-        MedicalRecord medicalRecord = medicalRecordRepository.findByUserID(userID);
+    public String updateMedicalRecord(Long upID, UpdateMedicalRequest updateMedicalRequest) {
+        MedicalRecord medicalRecord = medicalRecordRepository.findByUserProfileID(upID).orElseThrow();
         medicalRecord.setMedHistory(updateMedicalRequest.getMedHistory());
         medicalRecordRepository.save(medicalRecord);
         return "Update successfully!";

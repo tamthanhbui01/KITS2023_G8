@@ -21,8 +21,8 @@ public class BackgroundServiceImpl implements BackgroundService {
     @Autowired
     private MedicalRecordRepository medicalRecordRepository;
     @Override
-    public FindFromUserResponse<Background> getAllBackgrounds(Long userID, int pageNo, int pageSize) {
-        List<Background> allBackGrounds = backgroundRepository.findAllByUserID(userID);
+    public FindFromUserResponse<Background> getAllBackgrounds(Long medID, int pageNo, int pageSize) {
+        List<Background> allBackGrounds = backgroundRepository.findAllByMedID(medID);
         //Phan trang
         Pagination<Background> pagination = new Pagination<>();
         List<Background> backgrounds = pagination.pagination(allBackGrounds, pageNo, pageSize);
@@ -36,13 +36,13 @@ public class BackgroundServiceImpl implements BackgroundService {
     }
 
     @Override
-    public Background getSingleBackground(Long userID, LocalDate bgDate) {
-        return backgroundRepository.findByUserIDAndBackgroundDate(userID, bgDate).orElseThrow();
+    public Background getSingleBackground(Long medID, LocalDate bgDate) {
+        return backgroundRepository.findByMedIDAndBackgroundDate(medID, bgDate).orElseThrow();
     }
 
     @Override
-    public String createBackground(Long userID, BackgroundRequest backgroundRequest) {
-        MedicalRecord medicalRecord = medicalRecordRepository.findByUserID(userID);
+    public String createBackground(Long medID, BackgroundRequest backgroundRequest) {
+        MedicalRecord medicalRecord = medicalRecordRepository.findById(medID).orElseThrow();
         Background background = new Background();
         background.setBgDate(LocalDate.now());
         background.setMedicalRecord(medicalRecord);
@@ -52,8 +52,8 @@ public class BackgroundServiceImpl implements BackgroundService {
     }
 
     @Override
-    public String updateBackground(BackgroundRequest backgroundRequest) {
-        Background background = backgroundRepository.findBackgroundByBgDate(LocalDate.now()).orElseThrow();
+    public String updateBackground(Long medID, BackgroundRequest backgroundRequest) {
+        Background background = backgroundRepository.findBackgroundByBgDate(medID, LocalDate.now()).orElseThrow();
         background.setBgDescription(backgroundRequest.getBackgroundDescription());
         backgroundRepository.save(background);
         return "update successfully!";

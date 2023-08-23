@@ -1,9 +1,10 @@
 package com.example.backend.services.classes;
 
-import com.example.backend.controllers.controller_requests.UpdateUserProfileRequest;
 import com.example.backend.controllers.controller_requests.UserProfileRequest;
 import com.example.backend.enums.UserProfileEnum;
+import com.example.backend.models.MedicalRecord;
 import com.example.backend.models.UserProfile;
+import com.example.backend.repositories.MedicalRecordRepository;
 import com.example.backend.repositories.UserProfileRespository;
 import com.example.backend.securities.user.User;
 import com.example.backend.securities.user.UserRepository;
@@ -19,6 +20,8 @@ public class UserProfileServiceImpl implements UserProfileService {
     private UserProfileRespository userProfileRespository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private MedicalRecordRepository medicalRecordRepository;
     @Override
     public List<UserProfile> getUserProfile(Long userID) {
         return userProfileRespository.findByUserID(userID);
@@ -45,18 +48,22 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfile.setUser(user);
         userProfile.setUpRole(UserProfileEnum.BRANCH);
         userProfileRespository.save(userProfile);
+
+        MedicalRecord medicalRecord = new MedicalRecord();
+        medicalRecord.setUserProfile(userProfile);
+        medicalRecordRepository.save(medicalRecord);
         return "Create Successfully!";
     }
 
     @Override
-    public String updateUserProfile(Long upID, UpdateUserProfileRequest updateUserProfileRequest) {
+    public String updateUserProfile(Long upID, UserProfileRequest userProfileRequest) {
         UserProfile userProfile = userProfileRespository.findByUpID(upID).orElseThrow();
 
-        userProfile.setUpName(updateUserProfileRequest.getName());
-        userProfile.setUpDoB(updateUserProfileRequest.getDob());
-        userProfile.setUpPhone(updateUserProfileRequest.getPhone());
-        userProfile.setUpGender(updateUserProfileRequest.getGender());
-        userProfile.setUpIDCode(updateUserProfileRequest.getIdcode());
+        userProfile.setUpName(userProfileRequest.getUpName());
+        userProfile.setUpDoB(userProfileRequest.getUpDoB());
+        userProfile.setUpPhone(userProfileRequest.getUpPhone());
+        userProfile.setUpGender(userProfileRequest.getUpGender());
+        userProfile.setUpIDCode(userProfileRequest.getUpIDCode());
 
         userProfileRespository.save(userProfile);
         return "Update successfully";
@@ -69,5 +76,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         userProfileRespository.deleteById(upID);
         return "delete successfully!";
+    }
+
+    @Override
+    public UserProfile getSingleUserProfile(Long upID) {
+        return userProfileRespository.findByUpID(upID).orElseThrow();
     }
 }

@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("api/v1.0/user/background/{userID}")
+@RequestMapping("api/v1.0/user/background/{medID}")
 public class BackgroundController {
     @Autowired
     private BackgroundService backgroundService;
     @GetMapping
-    public FindFromUserResponse<Background> getAllBackgrounds(@PathVariable Long userID, @RequestParam int pageNo, @RequestParam int pageSize) {
-        return backgroundService.getAllBackgrounds(userID, pageNo, pageSize);
+    public FindFromUserResponse<Background> getAllBackgrounds(@PathVariable Long medID, @RequestParam int pageNo, @RequestParam int pageSize) {
+        return backgroundService.getAllBackgrounds(medID, pageNo, pageSize);
     }
     @GetMapping("{bgDate}")
-    public Background getSingleBackground(@PathVariable Long userID, @PathVariable LocalDate bgDate) {
-        return backgroundService.getSingleBackground(userID, bgDate);
+    public Background getSingleBackground(@PathVariable Long medID, @PathVariable LocalDate bgDate) {
+        return backgroundService.getSingleBackground(medID, bgDate);
     }
     @PostMapping
-    public String createBackground(@PathVariable Long userID, @RequestBody BackgroundRequest backgroundRequest) {
-        return backgroundService.createBackground(userID, backgroundRequest);
+    public String createBackground(@PathVariable Long medID, @RequestBody BackgroundRequest backgroundRequest) {
+        return backgroundService.createBackground(medID, backgroundRequest);
     }
     @PutMapping
-    public String updateBackground(@RequestBody BackgroundRequest backgroundRequest) {
-        return backgroundService.updateBackground(backgroundRequest);
+    public String updateBackground(@PathVariable Long medID, @RequestBody BackgroundRequest backgroundRequest) {
+        return backgroundService.updateBackground(medID, backgroundRequest);
     }
 }

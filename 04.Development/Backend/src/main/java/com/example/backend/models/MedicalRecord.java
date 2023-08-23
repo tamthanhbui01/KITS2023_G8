@@ -15,7 +15,7 @@ public class MedicalRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "med_id")
     private Long medID;
-    @Column(name = "med_history", nullable = false, length = 1500)
+    @Column(name = "med_history", length = 1500)
     private String medHistory;
     @OneToOne
     @JoinColumn(name = "up_id", referencedColumnName = "up_id")

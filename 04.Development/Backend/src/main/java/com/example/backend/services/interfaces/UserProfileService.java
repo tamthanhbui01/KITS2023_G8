@@ -1,7 +1,6 @@
 package com.example.backend.services.interfaces;
 
 
-import com.example.backend.controllers.controller_requests.UpdateUserProfileRequest;
 import com.example.backend.controllers.controller_requests.UserProfileRequest;
 import com.example.backend.models.UserProfile;
 import com.example.backend.securities.user.User;
@@ -13,9 +12,11 @@ public interface UserProfileService {
 
     void createUserProfile(User user);
 
-    String updateUserProfile(Long userID, UpdateUserProfileRequest updateUserProfileRequest);
+    String updateUserProfile(Long userID, UserProfileRequest userProfileRequest);
 
     String createUserProfile(Long userID, UserProfileRequest userProfileRequest);
 
     String deleteUserProfile(Long upID);
+
+    UserProfile getSingleUserProfile(Long upID);
 }
