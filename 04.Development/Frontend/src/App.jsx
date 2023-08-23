@@ -1,7 +1,9 @@
 import SiderContent from "./SiderContent";
-import Users from "./Users/Users";
 import Dashboard from "./Dashboard/Dashboard";
-import Appointments from "./Appointments/Appointments";
+import Appointment from "./Appointment/Appointment";
+import User from "./User/Users";
+import Prescription from "./Prescription/Prescription";
+import Reminder from "./Reminder/Reminder";
 import {
   Layout,
   Menu,
@@ -20,10 +22,8 @@ const { Text } = Typography;
 const { Search } = Input;
 import "./App.css";
 import { Link, Routes, Route } from "react-router-dom";
-
 import { HiMenu } from "react-icons/hi";
 import { useState, useEffect } from "react";
-
 import { GiMagicBroom } from "react-icons/gi";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { DownOutlined } from "@ant-design/icons";
@@ -74,7 +74,7 @@ function App() {
       handleCollapsed(window.innerWidth < 992);
     };
 
-    handleResize(); 
+    handleResize();
 
     window.addEventListener("resize", handleResize);
 
@@ -238,8 +238,10 @@ function App() {
         <Content>
           <Routes>
             <Route path="/" element={<Dashboard />}></Route>
-            <Route path="/users" element={<Users />}></Route>
-            <Route path="/appointments" element={<Appointments />}></Route>
+            <Route path="/user" element={<User />}></Route>
+            <Route path="/appointment" element={<Appointment />}></Route>
+            <Route path="/prescription" element={<Prescription />}></Route>
+            <Route path="/reminder" element={<Reminder />}></Route>
           </Routes>
         </Content>
         <Footer style={{ backgroundColor: "green" }}>
