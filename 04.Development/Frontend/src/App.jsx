@@ -27,7 +27,7 @@ import { useState, useEffect } from "react";
 import { GiMagicBroom } from "react-icons/gi";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { DownOutlined } from "@ant-design/icons";
-// import adminURL from "../public/icon/adminAvatar.svg?url"
+import HealthCalendar from "./HealthCalendar/HealthCalendar";
 const items = [
   {
     key: "1",
@@ -101,13 +101,11 @@ function App() {
       <FloatButton.Group shape="circle">
         <FloatButton
           style={{ backgroudColor: "#005298" }}
-          tooltip={<div>Customize</div>}
           onClick={() => setOpen(!open)}
           icon={<GiMagicBroom />}
         />
 
         <FloatButton.BackTop
-          tooltip={<div>BackTop</div>}
           visibilityHeight={0}
         />
       </FloatButton.Group>
@@ -189,8 +187,8 @@ function App() {
               items={[
                 {
                   label: (
-                    <Link to="">
-                      <Text>Profile</Text>
+                    <Link to="/calendar">
+                      <Text>Calendar</Text>
                     </Link>
                   ),
                   key: "1",
@@ -242,6 +240,7 @@ function App() {
             <Route path="/appointment" element={<Appointment />}></Route>
             <Route path="/prescription" element={<Prescription />}></Route>
             <Route path="/reminder" element={<Reminder />}></Route>
+            <Route path="/calendar" element={<HealthCalendar/>}></Route>
           </Routes>
         </Content>
         <Footer style={{ backgroundColor: "green" }}>
