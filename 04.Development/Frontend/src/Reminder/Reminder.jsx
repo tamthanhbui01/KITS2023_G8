@@ -110,13 +110,13 @@ const Reminder = () => {
   ];
 
   return (
-    <div>
-      <Row>
+    <div style={{display:"flex",  justifyContent:"center",}}>
+      <Row gutter={[16,16]} > 
+        <Col span={12}><h1>Reminder</h1></Col>
         <Col span={24}>
-          <Table columns={columns} dataSource={data} scroll={{ x: 500 }} />
+          <Table columns={columns} dataSource={data} scroll={{ x: 768 }} />
         </Col>
       </Row>
-
       <Modal
         open={modalVisible}
         onOk={handleModalOk}

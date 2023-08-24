@@ -12,9 +12,9 @@ import {
   Col,
   Layout,
   Menu,
-  Row
+  Row,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { GiHealthCapsule } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
@@ -104,28 +104,28 @@ const Dashboard = () => {
             icon={<MedicineBoxOutlined />}
             style={{ fontSize: "16px" }}
           >
-            <Link to="medicine">MedicineManagement</Link>
+            <Link to="medicine">Prescription</Link>
           </Menu.Item>
           <Menu.Item
             key="appointments"
             icon={<CalendarOutlined />}
             style={{ fontSize: "16px" }}
           >
-           <Link to="appointments">AppointmentManagement</Link>
+           <Link to="appointments">Appointment</Link>
           </Menu.Item>
           <Menu.Item
             key="health"
             icon={<FileOutlined />}
             style={{ fontSize: "16px" }}
           >
-           <Link to="health">HealthRecordManagement</Link>
+           <Link to="health">Health Record</Link>
           </Menu.Item>
           <Menu.Item
             key="providers"
             icon={<TeamOutlined />}
             style={{ fontSize: "16px" }}
           >
-           <Link to="providers">HealthCareProviders</Link>
+           <Link to="providers">HealthCare Providers</Link>
           </Menu.Item>
           
           <Menu.Item
@@ -153,14 +153,22 @@ const Dashboard = () => {
         </Menu>
       </Sider>
       <Layout>
-        <Header style={{background:"white"}}>
-        <Row gutter={[8, 8]} style={{paddingLeft:"1%", paddingRight:"2%"}} >
+        <Header style={{background:"white", height:64}}>
+        <Row  style={{paddingLeft:"1%", paddingRight:"2%",display:"flex", alignItems:"center", height:64}}  >
         {user.profiles.map(profile => (
-          <Col span={4} key={profile.id} >
-            <div>
-              <Card hoverable onClick={() => {localStorage.setItem("upID", profile.id)}} style={{}}> <h3>{profile.name}</h3></Card>
+          <Col span={3} key={profile.id} >
+              <Card style={{color:"#005298", width:"fit-content"}}  
+                    hoverable 
+                    size="small"  
+                    onClick={
+                      () => {
+                      localStorage.setItem("upID", profile.id)
+                      }}> 
+                      <h3>
+                        {profile.name}
+                      </h3>
+              </Card>
               {/* Other profile details */}
-            </div>
           </Col>
         ))}
       </Row>

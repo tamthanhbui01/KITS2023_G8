@@ -33,8 +33,11 @@ function App() {
     if (
       token !== null &&
       (location.pathname === "/register" || location.pathname === "/login")
-    ) {
-      navigate("/admin");
+        ) {if(id==1)
+          {
+            navigate("/admin");
+          } 
+          else navigate("")
     }
   }, []);
 

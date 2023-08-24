@@ -195,21 +195,14 @@ function Admin() {
                   ),
                   key: "1",
                 },
-                {
-                  label: (
-                    <Link to="">
-                      <Text>Pages</Text>
-                    </Link>
-                  ),
-                  key: "2",
-                },
+                
                 {
                   label: (
                     <Link to="">
                       <Text>Help</Text>
                     </Link>
                   ),
-                  key: "3",
+                  key: "2",
                 },
               ]}
             ></Menu>

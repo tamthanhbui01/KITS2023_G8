@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import {
@@ -18,7 +18,7 @@ const [chartData, setChartData] = useState([]);
 const handleFormSubmit = (values) => {
 const { weight, bloodPressure, glucoseLevel } = values;
 
-Copy
+
 const newChartData = [
   ...chartData,
   {
@@ -42,24 +42,24 @@ return false;
 
 return (
 <div>
-<h1>Nhật ký & hồ sơ sức khỏe</h1>
+<h1>Health Record</h1>
 <Form onFinish={handleFormSubmit}>
-<Form.Item name="weight" label="Cân nặng">
-<Input placeholder="VD:80Kg,..." />
+<Form.Item name="weight" label="Weight">
+<Input placeholder="Ex: 80Kg,..." />
 </Form.Item>
-<Form.Item name="bloodPressure" label="Huyết áp">
-<Input placeholder="VD:80 mmHg,..." />
+<Form.Item name="bloodPressure" label="Blood pressure">
+<Input placeholder="Ex: 80 mmHg,..." />
 </Form.Item>
-<Form.Item name="glucoseLevel" label="Nồng độ glucose">
-<Input placeholder="VD:70mg/dL,..." />
+<Form.Item name="glucoseLevel" label="Glucose concentration">
+<Input placeholder="Ex: 70mg/dL,..." />
 </Form.Item>
-<Form.Item name="medicalRecords" label="Tải lên hồ sơ">
+<Form.Item name="medicalRecords" label="Health Record">
 <Upload
 fileList={fileList}
 beforeUpload={handleFileUpload}
 onRemove={() => setFileList([])}
 >
-<Button icon={<UploadOutlined />}>Tải lên</Button>
+<Button icon={<UploadOutlined />}>Upload</Button>
 </Upload>
 </Form.Item>
 <Form.Item>

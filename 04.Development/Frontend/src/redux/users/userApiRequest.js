@@ -18,7 +18,7 @@ export const loginUser = async(user, dispatch, navigate) => {
     try {
         const res = await axios.post(BASE_AUTH_URL + "/authenticate", user);
         dispatch(loginSuccess(res.data));
-        localStorage.setItem("id", res.data.id);
+        localStorage.setItem("id", res.data.id); console.log(res.data)
         localStorage.setItem("name", res.data.name);
         localStorage.setItem("token", res.data.token);
         if (res.data.id == 1) navigate("/admin");

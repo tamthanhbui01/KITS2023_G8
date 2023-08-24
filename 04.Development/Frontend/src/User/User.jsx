@@ -1,8 +1,8 @@
-import {Space, Table } from "antd";
+import { Table } from "antd";
 
 import { useEffect, useState } from "react";
-import { getAllUsers } from "../redux/admin/adminApiRequest";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../redux/admin/adminApiRequest";
 const User = () => {
 
 const dispatch = useDispatch();
@@ -52,11 +52,11 @@ if (!isDataLoaded) {
   ];
 
   return (
-    <div style={{ padding: "2%" }}>
-      <Space direction="vertical">
+    <div style={{ padding: "2%",textAlign:"center" }}>
+      <div >
         <div style={{fontWeight: 700,fontSize:24}}>Users Management</div>
         <MyTable data={allUsers.users} columns={columns}/>
-      </Space>
+      </div>
     </div>
   );
 }
@@ -69,5 +69,5 @@ export const MyTable = ({ data, columns }) => {
     key: item.userID, // Use 'ID' field as the key
   }));
 
-  return <Table dataSource={dataSource} columns={columns} />;
+  return <Table dataSource={dataSource} columns={columns} scroll={{x:768}} style={{paddingTop:16}}/>;
 };

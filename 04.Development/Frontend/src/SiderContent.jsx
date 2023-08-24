@@ -27,7 +27,6 @@ function SiderContent({ collapsed }) {
         )}
       </div>
       <Menu
-        defaultSelectedKeys={["1"]}
         items={[
           {
             label: <Link to="/admin">Dashboard</Link>,

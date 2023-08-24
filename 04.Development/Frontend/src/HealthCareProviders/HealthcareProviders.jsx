@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, Row, Col, Modal, Button } from "antd";
 import hospital1 from "../assets/img/hospital1.svg";
 import hospital2 from "../assets/img/hospital2.svg";
@@ -74,10 +74,10 @@ setIsModalVisible(false);
 
 return (
 <div>
-<h2>Hợp tác với các nhà cung cấp dịch vụ chăm sóc sức khỏe</h2>
-<Row gutter={16}>
+<h1>Healthcare Provider</h1>
+<Row gutter={[16,16]}>
 {healthCareProviders.map((provider) => (
-<Col span={8} key={provider.id}>
+<Col xs={24} sm={24} md={12} lg={8}  key={provider.id}>
 <Card
 hoverable
 cover={
@@ -118,23 +118,23 @@ rel="noopener noreferrer"
 ))}
 </Row>
 <Modal
-title="Thông tin nhà cung cấp"
+title="Details"
 open={isModalVisible}
 onCancel={handleModalClose}
 footer={[
 <Button key="close" onClick={handleModalClose}>
-Đóng
+Cancel
 </Button>,
 ]}
 >
 {selectedProvider&& (
 <div>
-<p>Tên: {healthCareProviders[selectedProvider - 1].name}</p>
+<p>Provider: {healthCareProviders[selectedProvider - 1].name}</p>
 <p>
-Địa chỉ: {healthCareProviders[selectedProvider - 1].address}
+Address: {healthCareProviders[selectedProvider - 1].address}
 </p>
 <p>
-Dịch vụ: {healthCareProviders[selectedProvider - 1].services}
+Service: {healthCareProviders[selectedProvider - 1].services}
 </p>
 </div>
 )}

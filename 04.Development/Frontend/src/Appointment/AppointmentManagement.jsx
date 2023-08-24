@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Table, Button, Modal, Form, Input, DatePicker } from "antd";
+import { useState } from "react";
+import { Table, Button, Modal, Form, Input, DatePicker, Space } from "antd";
 import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,31 +20,31 @@ const AppointmentManagement = () => {
 
   const columns = [
     {
-      title: "Tên cuộc hẹn",
+      title: "Title",
       dataIndex: "name",
     },
     {
-      title: "Ngày hẹn",
+      title: "Date",
       dataIndex: "date",
     },
     {
-      title: "Nhà cung cấp dịch vụ",
+      title: "Provider",
       dataIndex: "provider",
     },
     {
-      title: "Địa điểm",
+      title: "Location",
       dataIndex: "location",
     },
     {
-      title: "Mục đích",
+      title: "Purpose",
       dataIndex: "purpose",
     },
     {
-      title: "Ghi chú",
+      title: "Note",
       dataIndex: "note",
     },
     {
-      title: "Hành động",
+      title: "Action",
       dataIndex: "action",
       render: (_, record) => (
         <div>
@@ -81,11 +81,11 @@ const AppointmentManagement = () => {
 
         setAppointments(updatedAppointments);
         setEditingAppointment(null);
-        toast.success("Lịch hẹn đã được cập nhật.");
+        toast.success("Your appointment has been updated!");
       } else {
         // Add new appointment
         setAppointments([...appointments, appointment]);
-        toast.success("Lịch hẹn đã được thêm mới.");
+        toast.success("A new appointment has been added successfully!");
       }
 
       setIsModalVisible(false);
@@ -99,7 +99,7 @@ const AppointmentManagement = () => {
         note: "",
       });
     } else {
-      toast.error("Vui lòng nhập tên cuộc hẹn và ngày hẹn.");
+      toast.error("Please entry title and date of appointment");
     }
   };
 
@@ -151,63 +151,63 @@ const AppointmentManagement = () => {
   };
 
   return (
-    <div>
-      <h2>Appointment Management</h2>
-      <Button type="primary" onClick={showModal}>
-        Thêm cuộc hẹn
+    <div style={{}}>
+      <h1 style={{paddingBottom:8}}>Appointment</h1>
+      <Button type="primary" onClick={showModal} >
+      Add
       </Button>
-      <Table dataSource={appointments} columns={columns} />
+      <Table dataSource={appointments} columns={columns} scroll={{x:768}} style={{paddingTop:8}}/>
 
       <Modal
-        title="Thêm cuộc hẹn"
-        visible={isModalVisible}
+        title="Add an appointment"
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
         <Form>
-          <Form.Item label="Tên cuộc hẹn">
+          <Form.Item label="Title">
             <Input
               name="name"
               onChange={handleInputChange}
               value={newAppointment.name}
             />
           </Form.Item>
-          <Form.Item label="Ngày hẹn">
+          <Form.Item label="Date">
             <DatePicker
               onChange={handleDateChange}
               value={newAppointment.date}
               format="DD/MM/YYYY"
             />
           </Form.Item>
-          <Form.Item label="Mô tả">
+          <Form.Item label="Description">
             <Input
               name="description"
               value={newAppointment.description}
               onChange={handleInputChange}
             />
           </Form.Item>
-          <Form.Item label="Nhà cung cấp dịch vụ">
+          <Form.Item label="Healthcare Provider">
             <Input
               name="provider"
               value={newAppointment.provider}
               onChange={handleInputChange}
             />
           </Form.Item>
-          <Form.Item label="Địa điểm">
+          <Form.Item label="Place">
             <Input
               name="location"
               value={newAppointment.location}
               onChange={handleInputChange}
             />
           </Form.Item>
-          <Form.Item label="Mục đích">
+          <Form.Item label="Purpose">
             <Input
               name="purpose"
               value={newAppointment.purpose}
               onChange={handleInputChange}
             />
           </Form.Item>
-          <Form.Item label="Ghi chú">
+          <Form.Item label="Note">
             <Input
               name="note"
               value={newAppointment.note}
