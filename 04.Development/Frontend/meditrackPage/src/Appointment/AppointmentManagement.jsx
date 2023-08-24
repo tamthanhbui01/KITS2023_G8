@@ -51,10 +51,10 @@ class AppointmentManagement extends React.Component {
       render: (_, record) => (
         <div>
           <Button type="primary" onClick={() => this.editAppointment(record)}>
-            Sửa đổi
+            Update
           </Button>
           <Button type="danger" onClick={() => this.cancelAppointment(record)}>
-            Hủy bỏ
+            Delete
           </Button>
         </div>
       ),
@@ -185,7 +185,7 @@ class AppointmentManagement extends React.Component {
 
     return (
       <div>
-        <h2>Theo dõi cuộc hẹn y tế</h2>
+        <h2>Appointment Management</h2>
         <Button type="primary" onClick={this.showModal}>
           Thêm cuộc hẹn
         </Button>

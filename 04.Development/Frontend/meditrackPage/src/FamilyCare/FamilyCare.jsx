@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-key */
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import React, { Component } from "react";
-import { List, Avatar, Button, Modal, Form, Input, message } from "antd";
+import { Card, Button, Modal, Form, Input, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-const { Item } = List;
+const { Meta } = Card;
 
 class FamilyCare extends Component {
   state = {
@@ -26,74 +27,61 @@ class FamilyCare extends Component {
       // Add more users as needed
     ],
     selectedUser: null,
-    requestModalVisible: false,
+    infoModalVisible: false,
   };
 
-  handleOpenRequestModal = (user) => {
-    this.setState({ selectedUser: user, requestModalVisible: true });
+  handleOpenInfoModal = (user) => {
+    this.setState({ selectedUser: user, infoModalVisible: true });
   };
 
-  handleCloseRequestModal = () => {
-    this.setState({ selectedUser: null, requestModalVisible: false });
-  };
-
-  handleSendRequest = () => {
-    // Perform the request sending logic here
-    // For demonstration purposes, we'll just display a success message
-    message.success("Request sent successfully");
-    this.handleCloseRequestModal();
+  handleCloseInfoModal = () => {
+    this.setState({ selectedUser: null, infoModalVisible: false });
   };
 
   render() {
-    const { users, selectedUser, requestModalVisible } = this.state;
+    const { users, selectedUser, infoModalVisible } = this.state;
 
     return (
       <div>
         <h1>Family Care</h1>
-        <List
-          itemLayout="horizontal"
-          dataSource={users}
-          renderItem={(user) => (
-            <Item
+        <div className="card-list">
+          {users.map((user) => (
+            <Card
+              key={user.id}
+              hoverable
+              style={{ width: 300, marginBottom: 16 }}
+              cover={<UserOutlined style={{ fontSize: 64, margin: 16 }} />}
               actions={[
                 <Button
                   type="primary"
-                  onClick={() => this.handleOpenRequestModal(user)}
+                  onClick={() => this.handleOpenInfoModal(user)}
                 >
-                  Send Request
+                  View Details
                 </Button>,
               ]}
             >
-              <Item.Meta
-                avatar={<Avatar icon={<UserOutlined />} />}
-                title={user.name}
-                description={user.email}
-              />
-            </Item>
-          )}
-        />
+              <Meta title={user.name} description={user.email} />
+            </Card>
+          ))}
+        </div>
         <Modal
-          title={`Send Request to ${selectedUser ? selectedUser.name : ""}`}
-          visible={requestModalVisible}
-          onCancel={this.handleCloseRequestModal}
+          title={`User Information - ${selectedUser ? selectedUser.name : ""}`}
+          visible={infoModalVisible}
+          onCancel={this.handleCloseInfoModal}
           footer={[
-            <Button key="cancel" onClick={this.handleCloseRequestModal}>
-              Cancel
-            </Button>,
-            <Button
-              key="send"
-              type="primary"
-              onClick={this.handleSendRequest}
-            >
-              Send Request
+            <Button key="close" onClick={this.handleCloseInfoModal}>
+              Close
             </Button>,
           ]}
         >
-          <Form layout="vertical">
-            <Form.Item label="Message">
-              <Input.TextArea rows={4} placeholder="Enter your message" />
-            </Form.Item>
-          </Form>
+          {selectedUser && (
+            <div>
+              <p>Name: {selectedUser.name}</p>
+              <p>Email: {selectedUser.email}</p>
+              <p>Address: {selectedUser.address}</p>
+              <p>Phone: {selectedUser.phone}</p>
+            </div>
+          )}
         </Modal>
       </div>
     );

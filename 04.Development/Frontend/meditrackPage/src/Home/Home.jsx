@@ -14,33 +14,27 @@ const Home = () => {
   const featureData = [
     {
       icon: <MedicineBoxOutlined />,
-      title: "Quản lý đơn thuốc",
-      description: "Mô tả cho tính năng quản lý đơn thuốc",
+      title: "MedicineManagement",
     },
     {
       icon: <CalendarOutlined />,
-      title: "Theo dõi cuộc hẹn y tế",
-      description: "Mô tả cho tính năng theo dõi cuộc hẹn y tế",
+      title: "AppointmentManagement",
     },
     {
       icon: <FileOutlined />,
-      title: "Nhật ký & hồ sơ sức khỏe",
-      description: "Mô tả cho tính năng nhật ký & hồ sơ sức khỏe",
+      title: "HealthRecordManagement",
     },
     {
       icon: <TeamOutlined />,
-      title: "Hợp tác với nhà cung cấp",
-      description: "Mô tả cho tính năng hợp tác với nhà cung cấp",
+      title: "HealthCareProviders",
     },
     {
       icon: <UserAddOutlined />,
-      title: "Người chăm sóc",
-      description: "Mô tả cho tính năng người chăm sóc",
+      title: "FamilyCare",
     },
     {
       icon: <ClockCircleOutlined />,
-      title: "Nhắc nhở",
-      description: "Mô tả cho tính năng nhắc nhở",
+      title: "Reminder",
     },
   ];
 

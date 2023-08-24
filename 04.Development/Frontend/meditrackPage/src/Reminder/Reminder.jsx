@@ -1,118 +1,141 @@
-/* eslint-disable react/prop-types */
-import React from "react";
-import { Modal, Button, notification } from "antd";
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react";
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  TimePicker,
+  message,
+  Row,
+  Col,
+} from "antd";
 
-class Reminder extends React.Component {
-  state = {
-    isModalVisible: false,
-    currentMedicine: null,
+const App = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentRecord, setCurrentRecord] = useState(null);
+
+  const handleReminder = (record) => {
+    setCurrentRecord(record);
+    setModalVisible(true);
   };
 
-  componentDidMount() {
-    this.startReminder();
-  }
-
-  componentWillUnmount() {
-    this.stopReminder();
-  }
-
-  startReminder = () => {
-    this.reminderInterval = setInterval(
-      this.checkMedicationSchedule,
-      1000 * 60
-    ); // Kiểm tra lịch uống thuốc mỗi phút
-  };
-
-  stopReminder = () => {
-    clearInterval(this.reminderInterval);
-  };
-
-  checkMedicationSchedule = () => {
-    const { medicines } = this.props;
-
-    // Lấy ngày và giờ hiện tại
-    const currentDate = new Date();
-    const currentDay = currentDate.toLocaleDateString();
-    const currentTime = currentDate.toLocaleTimeString();
-
-    // Tìm kiếm thuốc cần uống trong đơn thuốc
-    const upcomingMedicine = medicines.find(
-      (medicine) =>
-        medicine.frequency &&
-        medicine.frequency.includes(currentDay) &&
-        medicine.frequency.includes(currentTime)
-    );
-
-    if (upcomingMedicine) {
-      // Hiển thị thông báo nhắc nhở
-      this.showNotification(upcomingMedicine);
+  const handleModalOk = () => {
+    // Kiểm tra các trường thông tin
+    if (!currentRecord || !currentRecord.name) {
+      message.error("Vui lòng nhập đủ các trường trong reminder!");
+      return;
     }
+    setModalVisible(false);
+    message.success("Đặt lời nhắc thành công!");
   };
 
-  showNotification = (medicine) => {
-    const { name, dosage, frequency, prescribedBy } = medicine;
+  const handleModalCancel = () => {
+    setCurrentRecord(null);
+    setModalVisible(false);
+  };
 
-    notification.info({
-      message: "Lời nhắc uống thuốc",
-      description: (
-        <div>
-          <p>Tên thuốc: {name}</p>
-          <p>Liều lượng: {dosage}</p>
-          <p>Tần suất: {frequency}</p>
-          <p>Bác sĩ kê đơn: {prescribedBy}</p>
-        </div>
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      filters: [
+        {
+          text: "Prescription",
+          value: "Prescription",
+        },
+        {
+          text: "Appointment",
+          value: "Appointment",
+        },
+      ],
+      filterMode: "tree",
+      filterSearch: true,
+      onFilter: (value, record) => record.name.includes(value),
+      width: "30%",
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      filters: [
+        {
+          text: "Prescription",
+          value: "Prescription",
+        },
+        {
+          text: "Appointment",
+          value: "Appointment",
+        },
+        {
+          text: "Others",
+          value: "Others",
+        },
+      ],
+      onFilter: (value, record) => record.type.startsWith(value),
+      filterSearch: true,
+      width: "40%",
+    },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      render: (_, record) => (
+        <Button onClick={() => handleReminder(record)}>Set Reminder</Button>
       ),
-      duration: 0,
-      placement: "bottomRight",
-      closeIcon: <></>,
-      btn: (
-        <Button
-          type="primary"
-          onClick={() => this.showMedicineDetails(medicine)}
-        >
-          Xem chi tiết
-        </Button>
-      ),
-    });
-  };
+    },
+  ];
 
-  showMedicineDetails = (medicine) => {
-    this.setState({
-      isModalVisible: true,
-      currentMedicine: medicine,
-    });
-  };
+  const data = [
+    {
+      key: "1",
+      name: "Prescription 1",
+      type: "Prescription",
+    },
+    {
+      key: "2",
+      name: "Prescription 2",
+      type: "Prescription",
+    },
+    {
+      key: "3",
+      name: "Appointment 1",
+      type: "Appointment",
+    },
+    {
+      key: "4",
+      name: "Appointment 2",
+      type: "Appointment",
+    },
+  ];
 
-  handleModalClose = () => {
-    this.setState({
-      isModalVisible: false,
-      currentMedicine: null,
-    });
-  };
+  return (
+    <div>
+      <Row>
+        <Col span={24}>
+          <Table columns={columns} dataSource={data} scroll={{ x: 500 }} />
+        </Col>
+      </Row>
 
-  render() {
-    const { isModalVisible, currentMedicine } = this.state;
+      <Modal
+        visible={modalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+      >
+        <Form layout="vertical">
+          <Form.Item label="Appointment">
+            <Input value={currentRecord?.name} disabled />
+          </Form.Item>
+          <Form.Item label="Date">
+            <DatePicker />
+          </Form.Item>
+          <Form.Item label="Time">
+            <TimePicker />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </div>
+  );
+};
 
-    return (
-      <>
-        <Modal
-          title="Chi tiết thuốc"
-          visible={isModalVisible}
-          onCancel={this.handleModalClose}
-          footer={null}
-        >
-          {currentMedicine && (
-            <div>
-              <p>Tên thuốc: {currentMedicine.name}</p>
-              <p>Liều lượng: {currentMedicine.dosage}</p>
-              <p>Tần suất: {currentMedicine.frequency}</p>
-              <p>Bác sĩ kê đơn: {currentMedicine.prescribedBy}</p>
-            </div>
-          )}
-        </Modal>
-      </>
-    );
-  }
-}
-
-export default Reminder;
+export default App;

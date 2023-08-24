@@ -1,13 +1,22 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from "react";
-import { Layout, Menu, Row, Col, Avatar, Switch, Drawer } from "antd";
+import {
+  Layout,
+  Menu,
+  Row,
+  Col,
+  Avatar,
+  Switch,
+  Drawer,
+  Dropdown,
+  Space,
+} from "antd";
 import {
   MedicineBoxOutlined,
   CalendarOutlined,
   FileOutlined,
   TeamOutlined,
   UserAddOutlined,
-  ClockCircleOutlined,
   BellOutlined,
   UserOutlined,
   HomeOutlined,
@@ -19,9 +28,8 @@ import HealthRecordManagement from "../HealthRecordManagement/HealthRecordManage
 import HealthCareProviders from "../HealthCareProviders/HealthcareProviders";
 import FamilyMembers from "../FamilyCare/FamilyCare";
 import Reminders from "../Reminder/Reminder";
-import Header from "../header/index";
+import Profile from "../profile/index"; // Import the Profile component
 import logo from "../assets/img/logo.svg";
-
 const { Content, Sider } = Layout;
 
 class Dashboard extends Component {
@@ -71,6 +79,8 @@ class Dashboard extends Component {
         return <FamilyMembers />;
       case "reminders":
         return <Reminders />;
+      case "profile": // Add the "profile" case to display the Profile component
+        return <Profile />;
       default:
         return null;
     }
@@ -81,7 +91,6 @@ class Dashboard extends Component {
 
     return (
       <Layout style={{ minHeight: "100vh" }}>
-        <Header />
         <Sider width={200} theme={darkMode ? "dark" : "light"}>
           <div
             style={{
@@ -105,93 +114,71 @@ class Dashboard extends Component {
               icon={<HomeOutlined />}
               style={{ fontSize: "16px" }}
             >
-              Trang chủ
+              Home
             </Menu.Item>
             <Menu.Item
               key="medicine"
               icon={<MedicineBoxOutlined />}
               style={{ fontSize: "16px" }}
             >
-              Quản lý đơn thuốc
+              MedicineManagement
             </Menu.Item>
             <Menu.Item
               key="appointments"
               icon={<CalendarOutlined />}
               style={{ fontSize: "16px" }}
             >
-              Theo dõi cuộc hẹn y tế
+              AppointmentManagement
             </Menu.Item>
             <Menu.Item
               key="health"
               icon={<FileOutlined />}
               style={{ fontSize: "16px" }}
             >
-              Nhật ký & hồ sơ sức khỏe
+              HealthRecordManagement
             </Menu.Item>
             <Menu.Item
               key="providers"
               icon={<TeamOutlined />}
               style={{ fontSize: "16px" }}
             >
-              Hợp tác với nhà cung cấp
+              HealthCareProviders
             </Menu.Item>
             <Menu.Item
               key="familycare"
               icon={<UserAddOutlined />}
               style={{ fontSize: "16px" }}
             >
-              Người chăm sóc
+              FamilyCare
             </Menu.Item>
             <Menu.Item
               key="reminders"
-              icon={<ClockCircleOutlined />}
+              icon={<BellOutlined />}
               style={{ fontSize: "16px" }}
             >
-              Nhắc nhở
+              Reminder
+            </Menu.Item>
+            <Menu.Item
+              key="profile" // Add the "profile" key for the Profile menu item
+              icon={<UserOutlined />}
+              style={{ fontSize: "16px" }}
+            >
+              Profile
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
-          <Layout.Header
+          <Content
             style={{
+              margin: "24px 16px",
+              padding: 24,
               background: "#fff",
-              padding: "0 16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
+              minHeight: 280,
             }}
           >
-            <Row align="middle">
-              <Col>
-                <BellOutlined
-                  style={{
-                    fontSize: "20px",
-                    marginRight: "16px",
-                  }}
-                />
-                <Avatar
-                  icon={<UserOutlined />}
-                  style={{ marginLeft: "16px" }}
-                  onClick={this.handleShowUserProfile}
-                />
-              </Col>
-            </Row>
-          </Layout.Header>
-          <Content style={{ margin: "16px" }}>{this.renderContent()}</Content>
+            {this.renderContent()}
+          </Content>
         </Layout>
-        <Drawer
-          title="User Profile"
-          placement="right"
-          closable={false}
-          onClose={this.handleShowUserProfile}
-          visible={showUserProfile}
-          width={400}
-        >
-          <p>Tên người dùng</p>
-          <p>Email: example@example.com</p>
-          <p>Địa chỉ: 123 ABC Street, XYZ City</p>
-          <p>Số điện thoại: 123-456-7890</p>
-        </Drawer>
       </Layout>
     );
   }

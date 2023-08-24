@@ -50,13 +50,13 @@ class HealthRecordManagement extends React.Component {
         <h1>Nhật ký & hồ sơ sức khỏe</h1>
         <Form onFinish={this.handleFormSubmit}>
           <Form.Item name="weight" label="Cân nặng">
-            <Input />
+            <Input placeholder="VD:80Kg,..." />
           </Form.Item>
           <Form.Item name="bloodPressure" label="Huyết áp">
-            <Input />
+            <Input placeholder="VD:80 mmHg,..." />
           </Form.Item>
           <Form.Item name="glucoseLevel" label="Nồng độ glucose">
-            <Input />
+            <Input placeholder="VD:70mg/dL,..." />
           </Form.Item>
           <Form.Item name="medicalRecords" label="Tải lên hồ sơ">
             <Upload

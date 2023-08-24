@@ -14,6 +14,7 @@ const healthCareProviders = [
     image: hospital1,
     address: "số 78 đường Giải Phóng, phường Phương Mai, quận Đống Đa, Hà Nội",
     services: "Dịch vụ A",
+    website: "http://bachmai.gov.vn/",
   },
   {
     id: 2,
@@ -21,6 +22,7 @@ const healthCareProviders = [
     image: hospital2,
     address: "341 Sư Vạn Hạnh, Phường 10, Quận 10, TP Hồ Chí Minh",
     services: "Dịch vụ B",
+    website: "https://nhidong.org.vn/Index.aspx",
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ const healthCareProviders = [
     image: hospital3,
     address: "18/879 đường La Thành, phường Láng Thượng, quận Đống Đa, Hà Nội",
     services: "Dịch vụ C",
+    website: " https://benhviennhitrunguong.gov.vn/",
   },
   {
     id: 4,
@@ -35,6 +38,7 @@ const healthCareProviders = [
     image: hospital4,
     address: "42 P. Nghĩa Dũng, Phúc xá, Ba Đình, Hà Nội",
     services: "Dịch vụ C",
+    website: " https://medlatec.vn/",
   },
   {
     id: 5,
@@ -42,6 +46,7 @@ const healthCareProviders = [
     image: hospital5,
     address: "12 P. Chu Văn An, Điện Biên, Ba Đình, Hà Nội",
     services: "Dịch vụ C",
+    website: " http://bvxanhpon.vn/",
   },
   {
     id: 6,
@@ -49,6 +54,7 @@ const healthCareProviders = [
     image: hospital6,
     address: "15A, Phương Mai, Hà Nội",
     services: "Dịch vụ C",
+    website: " https://dalieu.vn/",
   },
 ];
 
@@ -103,7 +109,18 @@ class HealthCareProviders extends React.Component {
                 onClick={() => this.handleProviderSelect(provider.id)}
                 style={{ textAlign: "center" }}
               >
-                <Card.Meta title={provider.name} />
+                <Card.Meta
+                  title={provider.name}
+                  description={
+                    <a
+                      href={provider.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {provider.website}
+                    </a>
+                  }
+                />
               </Card>
             </Col>
           ))}
