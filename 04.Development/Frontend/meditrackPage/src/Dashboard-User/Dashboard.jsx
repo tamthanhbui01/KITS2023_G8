@@ -17,9 +17,10 @@ import MedicineManagement from "../Prescription/MedicineManagement";
 import AppointmentManagement from "../Appointment/AppointmentManagement";
 import HealthRecordManagement from "../HealthRecordManagement/HealthRecordManagement";
 import HealthCareProviders from "../HealthCareProviders/HealthcareProviders";
-import FamilyMembers from "../FamilyCare";
+import FamilyMembers from "../FamilyCare/FamilyCare";
 import Reminders from "../Reminder/Reminder";
-import logo from "../img/logo.svg";
+import Header from "../header/index";
+import logo from "../assets/img/logo.svg";
 
 const { Content, Sider } = Layout;
 
@@ -80,6 +81,7 @@ class Dashboard extends Component {
 
     return (
       <Layout style={{ minHeight: "100vh" }}>
+        <Header />
         <Sider width={200} theme={darkMode ? "dark" : "light"}>
           <div
             style={{

@@ -9,7 +9,7 @@ import {
   UserAddOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons";
-import logo from "../img/doctoravatar.png";
+import logo from "../assets/img/doctoravatar.png";
 const Home = () => {
   const featureData = [
     {

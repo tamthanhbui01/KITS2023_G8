@@ -1,110 +1,116 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { Component } from "react";
-import { Modal, Form, Input, Button, List, Checkbox, message } from "antd";
+import React from "react";
+import { Modal, Button, notification } from "antd";
 
-class Reminder extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      reminders: [],
-      showModal: false,
-      newReminder: "",
-    };
+class Reminder extends React.Component {
+  state = {
+    isModalVisible: false,
+    currentMedicine: null,
+  };
+
+  componentDidMount() {
+    this.startReminder();
   }
 
-  handleModalOpen = () => {
+  componentWillUnmount() {
+    this.stopReminder();
+  }
+
+  startReminder = () => {
+    this.reminderInterval = setInterval(
+      this.checkMedicationSchedule,
+      1000 * 60
+    ); // Kiểm tra lịch uống thuốc mỗi phút
+  };
+
+  stopReminder = () => {
+    clearInterval(this.reminderInterval);
+  };
+
+  checkMedicationSchedule = () => {
+    const { medicines } = this.props;
+
+    // Lấy ngày và giờ hiện tại
+    const currentDate = new Date();
+    const currentDay = currentDate.toLocaleDateString();
+    const currentTime = currentDate.toLocaleTimeString();
+
+    // Tìm kiếm thuốc cần uống trong đơn thuốc
+    const upcomingMedicine = medicines.find(
+      (medicine) =>
+        medicine.frequency &&
+        medicine.frequency.includes(currentDay) &&
+        medicine.frequency.includes(currentTime)
+    );
+
+    if (upcomingMedicine) {
+      // Hiển thị thông báo nhắc nhở
+      this.showNotification(upcomingMedicine);
+    }
+  };
+
+  showNotification = (medicine) => {
+    const { name, dosage, frequency, prescribedBy } = medicine;
+
+    notification.info({
+      message: "Lời nhắc uống thuốc",
+      description: (
+        <div>
+          <p>Tên thuốc: {name}</p>
+          <p>Liều lượng: {dosage}</p>
+          <p>Tần suất: {frequency}</p>
+          <p>Bác sĩ kê đơn: {prescribedBy}</p>
+        </div>
+      ),
+      duration: 0,
+      placement: "bottomRight",
+      closeIcon: <></>,
+      btn: (
+        <Button
+          type="primary"
+          onClick={() => this.showMedicineDetails(medicine)}
+        >
+          Xem chi tiết
+        </Button>
+      ),
+    });
+  };
+
+  showMedicineDetails = (medicine) => {
     this.setState({
-      showModal: true,
+      isModalVisible: true,
+      currentMedicine: medicine,
     });
   };
 
   handleModalClose = () => {
     this.setState({
-      showModal: false,
-      newReminder: "",
+      isModalVisible: false,
+      currentMedicine: null,
     });
-  };
-
-  handleInputChange = (e) => {
-    this.setState({
-      newReminder: e.target.value,
-    });
-  };
-
-  handleFormSubmit = () => {
-    const { reminders, newReminder } = this.state;
-
-    if (newReminder.trim() === "") {
-      message.error("Please enter a reminder.");
-      return;
-    }
-
-    const newReminderObj = {
-      id: reminders.length + 1,
-      text: newReminder,
-      completed: false,
-    };
-
-    this.setState((prevState) => ({
-      reminders: [...prevState.reminders, newReminderObj],
-      showModal: false,
-      newReminder: "",
-    }));
-
-    message.success("Reminder added successfully.");
   };
 
   render() {
-    const { reminders, showModal, newReminder } = this.state;
-    const { appointments } = this.props;
+    const { isModalVisible, currentMedicine } = this.state;
 
     return (
-      <div>
-        <h1>Reminder</h1>
-        <Button type="primary" onClick={this.handleModalOpen}>
-          Add Reminder
-        </Button>
+      <>
         <Modal
-          title="Add Reminder"
-          visible={showModal}
+          title="Chi tiết thuốc"
+          visible={isModalVisible}
           onCancel={this.handleModalClose}
-          footer={[
-            <Button key="cancel" onClick={this.handleModalClose}>
-              Cancel
-            </Button>,
-            <Button key="add" type="primary" onClick={this.handleFormSubmit}>
-              Add
-            </Button>,
-          ]}
+          footer={null}
         >
-          <Form onSubmit={this.handleFormSubmit}>
-            <Form.Item label="Reminder">
-              <Input value={newReminder} onChange={this.handleInputChange} />
-            </Form.Item>
-
-            <Form.Item label="Appointments">
-              <List
-                dataSource={appointments}
-                renderItem={(appointment) => (
-                  <List.Item>
-                    <Checkbox>{appointment.name}</Checkbox>
-                  </List.Item>
-                )}
-              />
-            </Form.Item>
-          </Form>
-        </Modal>
-        <h2>Reminders:</h2>
-        <List
-          dataSource={reminders}
-          renderItem={(reminder) => (
-            <List.Item key={reminder.id}>
-              <Checkbox checked={reminder.completed}>{reminder.text}</Checkbox>
-            </List.Item>
+          {currentMedicine && (
+            <div>
+              <p>Tên thuốc: {currentMedicine.name}</p>
+              <p>Liều lượng: {currentMedicine.dosage}</p>
+              <p>Tần suất: {currentMedicine.frequency}</p>
+              <p>Bác sĩ kê đơn: {currentMedicine.prescribedBy}</p>
+            </div>
           )}
-        />
-      </div>
+        </Modal>
+      </>
     );
   }
 }

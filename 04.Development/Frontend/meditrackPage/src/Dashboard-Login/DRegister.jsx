@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Radio } from "antd";
-import banner from "../img/banner.png";
-import admin from "../img/admin.jpg";
+import banner from "../assets/img/banner.png";
+import admin from "../assets/img/admin.jpg";
 import "./DRegister.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
