@@ -1,52 +1,73 @@
-import { Pagination, Space, Table } from "antd";
-const { showQuickJumper } = Pagination;
-function User() {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+import {Space, Table } from "antd";
+
+import { useEffect, useState } from "react";
+import { getAllUsers } from "../redux/admin/adminApiRequest";
+import { useDispatch, useSelector } from "react-redux";
+const User = () => {
+
+const dispatch = useDispatch();
+const token = localStorage.getItem("token");
+const allUsers = useSelector((state) => state.admin.users?.allUsers);
+const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+useEffect(() => {
+  const fetchData = async () => {
+    await getAllUsers(token, dispatch, "", "", 1, 100);
+    setIsDataLoaded(true);
+  };
+
+  fetchData();
+}, [isDataLoaded]);
+if (!isDataLoaded) {
+  return <div>Loading...</div>;
+}
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Account",
+      dataIndex: "userAccount",
+      key: "userAccount",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "Email",
+      dataIndex: "userEmail",
+      key: "userEmail",
+    },
+    
+    {
+      title: "Created at",
+      dataIndex: "userCreatedAt",
+      key: "userCreatedAt",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Updated at",
+      dataIndex: "userUpdatedAt",
+      key: "userUpdatedAt",
+    },
+    {
+      title: "Status",
+      dataIndex: "userStatus",
+      key: "userStatus",
     },
   ];
 
   return (
     <div style={{ padding: "2%" }}>
       <Space direction="vertical">
-        <div>Users List</div>
-        <Table
-          dataSource={dataSource}
-          columns={columns}
-          pagination={{
-            // total: 50,
-          }}
-        />
+        <div style={{fontWeight: 700,fontSize:24}}>Users Management</div>
+        <MyTable data={allUsers.users} columns={columns}/>
       </Space>
     </div>
   );
 }
 export default User;
+
+
+export const MyTable = ({ data, columns }) => {
+  const dataSource = data.map(item => ({
+    ...item,
+    key: item.userID, // Use 'ID' field as the key
+  }));
+
+  return <Table dataSource={dataSource} columns={columns} />;
+};

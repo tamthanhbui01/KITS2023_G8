@@ -1,5 +1,4 @@
 import { MedicineBoxOutlined } from "@ant-design/icons";
-import { Pie, measureTextWidth } from "@ant-design/plots";
 import { Card, Col, Row, Space, Typography } from "antd";
 import { BiUser } from "react-icons/bi";
 import { CgPill } from "react-icons/cg";
@@ -14,7 +13,7 @@ import { Link } from "react-router-dom";
 const { Text } = Typography;
 const baseUrl = "http://localhost:8080";
 
-function Dashboard() {
+function AdminDashboard() {
   return (
     <>
       <Row
@@ -22,7 +21,7 @@ function Dashboard() {
         style={{ marginTop: 12, marginLeft: 6, marginRight: 6 }}
       >
         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-          <Link to="/user">
+          <Link to="user">
             <Card hoverable>
               <Space>
                 <div style={{ paddingRight: 40 }}>
@@ -37,7 +36,6 @@ function Dashboard() {
           </Link>
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-          <Link to="/appointment">
           <Card hoverable>
             <Space>
               <div style={{ paddingRight: 40 }}>
@@ -52,37 +50,32 @@ function Dashboard() {
               </Space>
             </Space>
           </Card>
-          </Link>
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-          <Link to="/prescription">
-            <Card hoverable>
-              <Space>
-                <div style={{ paddingRight: 40 }}>
-                  <CgPill className="card-icon" fontSize={40} />
-                </div>
-                <Space direction="vertical">
-                  <Text className="card-title">Presciptions</Text>
-                  <Text className="card-data">288</Text>
-                </Space>
+          <Card hoverable>
+            <Space>
+              <div style={{ paddingRight: 40 }}>
+                <CgPill className="card-icon" fontSize={40} />
+              </div>
+              <Space direction="vertical">
+                <Text className="card-title">Presciptions</Text>
+                <Text className="card-data">288</Text>
               </Space>
-            </Card>
-          </Link>
+            </Space>
+          </Card>
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
-          <Link to="/reminder">
-            <Card hoverable>
-              <Space>
-                <div style={{ paddingRight: 40 }}>
-                  <PiBellRingingBold className="card-icon" fontSize={40} />
-                </div>
-                <Space direction="vertical">
-                  <Text className="card-title">Reminders</Text>
-                  <Text className="card-data">200</Text>
-                </Space>
+          <Card hoverable>
+            <Space>
+              <div style={{ paddingRight: 40 }}>
+                <PiBellRingingBold className="card-icon" fontSize={40} />
+              </div>
+              <Space direction="vertical">
+                <Text className="card-title">Reminders</Text>
+                <Text className="card-data">200</Text>
               </Space>
-            </Card>
-          </Link>
+            </Space>
+          </Card>
         </Col>
       </Row>
       <Row
@@ -163,4 +156,4 @@ function Dashboard() {
     </>
   );
 }
-export default Dashboard;
+export default AdminDashboard;

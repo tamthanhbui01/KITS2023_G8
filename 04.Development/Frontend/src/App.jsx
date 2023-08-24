@@ -1,253 +1,75 @@
-import SiderContent from "./SiderContent";
-import Dashboard from "./Dashboard/Dashboard";
-import Appointment from "./Appointment/Appointment";
-import User from "./User/User";
-import Prescription from "./Prescription/Prescription";
-import Reminder from "./Reminder/Reminder";
-import {
-  Layout,
-  Menu,
-  Input,
-  Button,
-  Space,
-  Drawer,
-  Typography,
-  FloatButton,
-  Avatar,
-  Badge,
-  Dropdown,
-} from "antd";
-const { Sider, Header, Footer, Content } = Layout;
-const { Text } = Typography;
-const { Search } = Input;
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
-import { Link, Routes, Route } from "react-router-dom";
-import { HiMenu } from "react-icons/hi";
-import { useState, useEffect } from "react";
-import { GiMagicBroom } from "react-icons/gi";
-import { IoNotificationsSharp } from "react-icons/io5";
-import { DownOutlined } from "@ant-design/icons";
+import DLogin from "./Dashboard-Login/DLogin";
+import Admin from "./Admin/Admin";
+import DRegister from "./Dashboard-Login/DRegister";
+import { useEffect } from "react";
+import Dashboard from "./Dashboard-User/Dashboard"
+import User from "./User/User";
+
 import HealthCalendar from "./HealthCalendar/HealthCalendar";
-const items = [
-  {
-    key: "1",
-    label: (
-      <a
-        rel="noopener noreferrer"
-        // href=""
-      >
-        Profile
-      </a>
-    ),
-  },
-  {
-    key: "2",
-    label: (
-      <a
-        rel="noopener noreferrer"
-        // href="https://www.aliyun.com"
-      >
-        Settings
-      </a>
-    ),
-  },
-  {
-    key: "3",
-    label: (
-      <a
-        rel="noopener noreferrer"
-        // href="https://www.luohanacademy.com"
-      >
-        Privacy
-      </a>
-    ),
-  },
-  {
-    key: "4",
-    label: "Sign out",
-  },
-];
+import AdminDashboard from "./Dashboard/Dashboard";
+import Home from "./Home/Home";
+import MedicineManagement from "./Prescription/MedicineManagement";
+import AppointmentManagement from "./Appointment/AppointmentManagement";
+import HealthRecordManagement from "./HealthRecordManagement/HealthRecordManagement";
+import HealthCareProviders from "./HealthCareProviders/HealthcareProviders";
+import ProfilePage from "./profile";
+import Reminder from "./Reminder/Reminder";
+
 function App() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const id = localStorage.getItem("id");
+  const location = useLocation();
+
   useEffect(() => {
-    const handleResize = () => {
-      setShowToggle(window.innerWidth < 992);
-      handleCollapsed(window.innerWidth < 992);
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    if (
+      token === null &&
+      (location.pathname !== "/register" || location.pathname !== "/login")
+    ) {
+      navigate("/login");
+    }
+    if (
+      token !== null &&
+      (location.pathname === "/register" || location.pathname === "/login")
+    ) {
+      navigate("/admin");
+    }
   }, []);
 
-  const [collapsed, handleCollapsed] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const [showToggle, setShowToggle] = useState(window.innerWidth < 992);
-
-  const showDrawer = () => {
-    setIsDrawerVisible(true);
-  };
-
-  const closeDrawer = () => {
-    setIsDrawerVisible(false);
-  };
-
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <FloatButton.Group shape="circle">
-        <FloatButton
-          style={{ backgroudColor: "#005298" }}
-          onClick={() => setOpen(!open)}
-          icon={<GiMagicBroom />}
-        />
+    <>
+      {token === null ? (
+        <Routes>
+          <Route path="/login" element={<DLogin />}></Route>
+          <Route path="/register" element={<DRegister />} />
+        </Routes>
+      ) : id == 1 ? (
+        <Routes>
+          <Route path="/admin" element={<Admin />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="user" element={<User />}></Route>
+            <Route path="claim" element={<>Hello</>}></Route>
+            <Route path="calendar" element={<HealthCalendar />}></Route>
+          </Route>
+        </Routes>
+      ) : (
+        <Routes>
+          <Route path="/" element={<Dashboard/>}>
+          <Route index element={<Home/>} ></Route>
+          <Route path="medicine" element={<MedicineManagement/>}></Route>
+          <Route path="appointments" element={<AppointmentManagement/>}></Route>
+          <Route path="health" element={<HealthRecordManagement/>}></Route>
+          <Route path="providers" element={<HealthCareProviders/>}></Route>
+          <Route path="reminders" element={<Reminder/>} ></Route>
+          <Route path="profile" element={<ProfilePage/>}></Route>
+          </Route>
 
-        <FloatButton.BackTop
-          visibilityHeight={0}
-        />
-      </FloatButton.Group>
-      <Drawer
-        headerStyle={{ background: "#005298" }}
-        open={open}
-        onClose={() => setOpen(!open)}
-        title="Customization"
-        width={376}
-      >
-        helo ae
-      </Drawer>
-
-      <Drawer
-        placement="left"
-        width={200}
-        open={isDrawerVisible}
-        onClose={closeDrawer}
-        closable={false}
-      >
-        <SiderContent collapsed={collapsed} />
-      </Drawer>
-      <Sider
-        theme="light"
-        width={240}
-        collapsed={collapsed}
-        breakpoint="lg"
-        collapsedWidth={showToggle ? 0 : 80}
-        trigger={null}
-        onBreakpoint={(broken) => {
-          if (broken) {
-            setIsDrawerVisible(false);
-            handleCollapsed(broken);
-          }
-        }}
-        onCollapse={(collapsed) => {
-          setIsDrawerVisible(false);
-          handleCollapsed(collapsed);
-        }}
-      >
-        <SiderContent collapsed={collapsed} />
-      </Sider>
-      <Layout>
-        <Header style={{ background: "white" }}>
-          <div
-            style={{
-              display: "flex",
-              maxHeight: 64,
-              alignItems: "center",
-              marginLeft: "1.5%",
-              marginRight: "1.5%",
-            }}
-          >
-            <div
-              style={{ display: "flex", alignItems: "center", flex: 1, gap: 8 }}
-            >
-              {showToggle ? (
-                <Button type="primary" icon={<HiMenu />} onClick={showDrawer} />
-              ) : (
-                <Button
-                  icon={<HiMenu />}
-                  onClick={() => {
-                    handleCollapsed(!collapsed);
-                  }}
-                />
-              )}
-
-              <Search
-                className="responsive-search"
-                placeholder="Search"
-                size="large"
-                style={{ width: 200 }}
-              />
-            </div>
-
-            <Menu
-              style={{ width: "100%" }}
-              mode="horizontal"
-              items={[
-                {
-                  label: (
-                    <Link to="/calendar">
-                      <Text>Calendar</Text>
-                    </Link>
-                  ),
-                  key: "1",
-                },
-                {
-                  label: (
-                    <Link to="">
-                      <Text>Pages</Text>
-                    </Link>
-                  ),
-                  key: "2",
-                },
-                {
-                  label: (
-                    <Link to="">
-                      <Text>Help</Text>
-                    </Link>
-                  ),
-                  key: "3",
-                },
-              ]}
-            ></Menu>
-            <Space>
-              <Badge count={10} overflowCount={9}>
-                <Avatar
-                  style={{ backgroundColor: "#005298" }}
-                  icon={<IoNotificationsSharp />}
-                />
-              </Badge>
-              <Dropdown
-                menu={{
-                  items,
-                }}
-              >
-                <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    admin
-                    <DownOutlined />
-                  </Space>
-                </a>
-              </Dropdown>
-            </Space>
-          </div>
-        </Header>
-        <Content>
-          <Routes>
-            <Route path="/" element={<Dashboard />}></Route>
-            <Route path="/user" element={<User />}></Route>
-            <Route path="/appointment" element={<Appointment />}></Route>
-            <Route path="/prescription" element={<Prescription />}></Route>
-            <Route path="/reminder" element={<Reminder />}></Route>
-            <Route path="/calendar" element={<HealthCalendar/>}></Route>
-          </Routes>
-        </Content>
-        <Footer style={{ backgroundColor: "green" }}>
-          <div>2023@ G8</div>
-        </Footer>
-      </Layout>
-    </Layout>
+            
+        </Routes>
+      )}
+    </>
   );
 }
 
